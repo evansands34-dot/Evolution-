@@ -1,54 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Image Gallery</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f5;
-        }
-        img {
-            width: 300px;
-            margin: 10px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-        }
-        #counter {
-            font-size: 20px;
-            margin: 20px 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Image Gallery</title>
+<style>
+    body { font-family: Arial; text-align: center; background-color: #f5f5f5; }
+    img { width: 300px; margin: 10px; border: 2px solid #ccc; border-radius: 10px; }
+    #counter { font-size: 20px; margin: 20px 0; }
+</style>
 </head>
 <body>
-    <h1>Welcome to My Gallery</h1>
-    
-    <div id="gallery">
-        <img src="ChatGPT Image Apr 5, 2026, 05_30_31 PM.png" alt="Image 1">
-        <img src="ChatGPT Image Apr 5, 2026, 05_30_08 PM.png" alt="Image 2">
-        <img src="ChatGPT Image Apr 5, 2026, 05_29_10 PM.png" alt="Image 3">
-        <img src="ChatGPT Image Apr 5, 2026, 05_29_44 PM.png" alt="Image 4">
-    </div>
+<h1>Welcome to My Gallery</h1>
 
-    <div id="counter">Visitor Count: <span id="visitors">0</span></div>
+<div id="gallery">
+    <img src="ChatGPT Image Apr 5, 2026, 05_30_31 PM.png" alt="Image 1">
+    <img src="ChatGPT Image Apr 5, 2026, 05_30_08 PM.png" alt="Image 2">
+    <img src="ChatGPT Image Apr 5, 2026, 05_29_10 PM.png" alt="Image 3">
+    <img src="ChatGPT Image Apr 5, 2026, 05_29_44 PM.png" alt="Image 4">
+</div>
 
-    <script>
-        // Check if a visitor count exists in localStorage
-        let visitors = localStorage.getItem('visitorCount');
-        if (!visitors) {
-            visitors = 0;
-        } else {
-            visitors = parseInt(visitors);
-        }
+<div id="counter">Visitor Count: <span id="visitors">0</span></div>
 
-        // Increase the visitor count by 1
-        visitors++;
-        localStorage.setItem('visitorCount', visitors);
+<script>
+const BIN_URL = "https://api.jsonbin.io/v3/b/YOUR_BIN_ID"; // Replace YOUR_BIN_ID
+const API_KEY = "YOUR_API_KEY"; // Replace with your JSONBin secret key
 
-        // Display the visitor count
-        document.getElementById('visitors').textContent = visitors;
-    </script>
+async function updateVisitorCounter() {
+    try {
+        // 1. Get current visitor count
+        const res = await fetch(BIN_URL, {
+            headers: { "X-Master-Key": API_KEY }
+        });
+        const data = await res.json();
+        let count = data.record.visitorCount || 0;
+
+        // 2. Increase count by 1
+        count++;
+
+        // 3. Update the bin with new count
+        await fetch(BIN_URL, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Master-Key": API_KEY
+            },
+            body: JSON.stringify({ visitorCount: count })
+        });
+
+        // 4. Display the count on page
+        document.getElementById('visitors').textContent = count;
+    } catch (err) {
+        console.error("Error updating counter:", err);
+        document.getElementById('visitors').textContent = "Error";
+    }
+}
+
+// Call the function to update the counter
+updateVisitorCounter();
+</script>
 </body>
 </html>
