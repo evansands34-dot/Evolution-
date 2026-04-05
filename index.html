@@ -3,15 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Image Gallery</title>
+<title>Evolution Gallery</title>
 <style>
-    body { font-family: Arial; text-align: center; background-color: #f5f5f5; }
-    img { width: 300px; margin: 10px; border: 2px solid #ccc; border-radius: 10px; }
-    #counter { font-size: 20px; margin: 20px 0; }
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        margin: 20px 0;
+    }
+    #gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    #gallery img {
+        width: 300px;
+        margin: 10px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+    }
+    #counter {
+        font-size: 20px;
+        margin: 20px 0;
+    }
 </style>
 </head>
 <body>
-<h1>Welcome to My Gallery</h1>
+<h1>Welcome to Evolution Gallery</h1>
 
 <div id="gallery">
     <img src="ChatGPT Image Apr 5, 2026, 05_30_31 PM.png" alt="Image 1">
@@ -23,22 +46,23 @@
 <div id="counter">Visitor Count: <span id="visitors">0</span></div>
 
 <script>
-const BIN_URL = "https://api.jsonbin.io/v3/b/YOUR_BIN_ID"; // Replace YOUR_BIN_ID
-const API_KEY = "YOUR_API_KEY"; // Replace with your JSONBin secret key
+// === GLOBAL VISITOR COUNTER USING JSONBIN ===
+const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
+const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
 
 async function updateVisitorCounter() {
     try {
-        // 1. Get current visitor count
+        // 1. Get current visitor count from JSONBin
         const res = await fetch(BIN_URL, {
             headers: { "X-Master-Key": API_KEY }
         });
         const data = await res.json();
         let count = data.record.visitorCount || 0;
 
-        // 2. Increase count by 1
+        // 2. Increase the counter by 1
         count++;
 
-        // 3. Update the bin with new count
+        // 3. Update the JSONBin record
         await fetch(BIN_URL, {
             method: "PUT",
             headers: {
@@ -48,7 +72,7 @@ async function updateVisitorCounter() {
             body: JSON.stringify({ visitorCount: count })
         });
 
-        // 4. Display the count on page
+        // 4. Show the count on your page
         document.getElementById('visitors').textContent = count;
     } catch (err) {
         console.error("Error updating counter:", err);
@@ -56,7 +80,7 @@ async function updateVisitorCounter() {
     }
 }
 
-// Call the function to update the counter
+// Run the counter update
 updateVisitorCounter();
 </script>
 </body>
