@@ -3,81 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolution Brand</title>
+    <title>My Image Gallery</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #222;
-        }
-        header {
-            background-color: #111;
-            color: #fff;
-            padding: 20px 0;
+            font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f5f5f5;
         }
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-        }
-        header p {
-            margin: 5px 0 0 0;
-            font-size: 1rem;
-            color: #ccc;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 40px 20px;
-        }
-        .gallery img {
+        img {
             width: 300px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
         }
-        .gallery img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-        }
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #111;
-            color: #ccc;
-            margin-top: 40px;
-        }
-        footer span {
-            font-weight: bold;
+        #counter {
+            font-size: 20px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Evolution</h1>
-        <p>Your Sneaker & Outfit Collection</p>
-    </header>
+    <h1>Welcome to My Gallery</h1>
+    
+    <div id="gallery">
+        <img src="ChatGPT Image Apr 5, 2026, 05_30_31 PM.png" alt="Image 1">
+        <img src="ChatGPT Image Apr 5, 2026, 05_30_08 PM.png" alt="Image 2">
+        <img src="ChatGPT Image Apr 5, 2026, 05_29_10 PM.png" alt="Image 3">
+        <img src="ChatGPT Image Apr 5, 2026, 05_29_44 PM.png" alt="Image 4">
+    </div>
 
-    <section class="gallery">
-        <img src="https://raw.githubusercontent.com/evansands34-dot/Evolution-/main/1%20Screen%20shot%20_20250622_191824_Chrome.jpg" alt="Screenshot 1">
-        <img src="https://raw.githubusercontent.com/evansands34-dot/Evolution-/main/2%20screen%20shot%20Screenshot%20_20250622_182351_Chrome.jpg" alt="Screenshot 2">
-        <img src="https://raw.githubusercontent.com/evansands34-dot/Evolution-/main/3%20screen%20shot%20Screenshot_20250621_121558_Chrome.jpg" alt="Screenshot 3">
-        <img src="https://raw.githubusercontent.com/evansands34-dot/Evolution-/main/4%20screen%20shot%20Screenshot_20250621_121558_Chrome.jpg" alt="Screenshot 4">
-    </section>
+    <div id="counter">Visitor Count: <span id="visitors">0</span></div>
 
-    <footer>
-        Visitor Counter: <span id="visitor-counter">0</span>
-        <script>
-            let count = localStorage.getItem('visitorCount') || 0;
-            document.getElementById('visitor-counter').innerText = ++count;
-            localStorage.setItem('visitorCount', count);
-        </script>
-    </footer>
+    <script>
+        // Check if a visitor count exists in localStorage
+        let visitors = localStorage.getItem('visitorCount');
+        if (!visitors) {
+            visitors = 0;
+        } else {
+            visitors = parseInt(visitors);
+        }
+
+        // Increase the visitor count by 1
+        visitors++;
+        localStorage.setItem('visitorCount', visitors);
+
+        // Display the visitor count
+        document.getElementById('visitors').textContent = visitors;
+    </script>
 </body>
 </html>
