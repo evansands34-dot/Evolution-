@@ -3,42 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evolution Brand - Shoe and Clothing Company</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Evolution</title>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Evolution Brand</h1>
-        <nav>
-            <ul>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#collection">Brand Collection</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="products">
-            <h2>Product Showcase</h2>
-            <div class="product" id="red-and-white-sneaker">
-                <h3>Red and White Sneaker</h3>
-                <img src="images/red-white-sneaker.jpg" alt="Red and White Sneaker">
-                <p>Description: The perfect blend of style and comfort, our red and white sneaker is designed for fashion-forward individuals.</p>
-                <p>Price: $79.99</p>
-            </div>
-        </section>
-        <section id="collection">
-            <h2>Brand Collection Outfit</h2>
-            <div class="outfit">
-                <h3>Stylish Ensemble</h3>
-                <img src="images/collection-outfit.jpg" alt="Brand Collection Outfit">
-                <p>Discover our latest fashionable outfits that pair perfectly with your new sneakers.</p>
-                <p>Price: $119.99</p>
-            </div>
-        </section>
-    </main>
+    <h1>Welcome to Evolution</h1>
     <footer>
-        <p>© 2026 Evolution Brand. All rights reserved.</p>
+        <div>
+            Visitor Counter: <span id="visitor-counter">0</span>
+        </div>
+        <script>
+            let count = localStorage.getItem('visitorCount') || 0;
+            document.getElementById('visitor-counter').innerText = ++count;
+            localStorage.setItem('visitorCount', count);
+        </script>
+        <br />
+        <img src="https://img.shields.io/badge/visitors-{{count}}-blue" alt="Visitor Count Badge" />
     </footer>
 </body>
 </html>
