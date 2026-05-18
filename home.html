@@ -14,7 +14,8 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #2c3e50;
+            background-color: #f8f9fa;
         }
 
         header {
@@ -24,7 +25,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         nav {
@@ -38,82 +39,132 @@
 
         .logo {
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 700;
             text-decoration: none;
             color: white;
+            letter-spacing: -0.5px;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: 35px;
             align-items: center;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
             cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
         }
 
         nav a:hover {
-            opacity: 0.8;
+            opacity: 0.85;
         }
 
         .visitor-counter {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('ChatGPT Image Apr 5, 2026, 05_30_31 PM.png');
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('ChatGPT Image Apr 5, 2026, 05_30_31 PM.png');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 100px 20px;
+            padding: 140px 20px;
             text-align: center;
-            min-height: 500px;
+            min-height: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+            z-index: 1;
+        }
+
+        .hero > div {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
         }
 
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 56px;
+            margin-bottom: 16px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+            font-weight: 700;
+            letter-spacing: -1px;
         }
 
         .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
+            font-size: 22px;
+            margin-bottom: 40px;
             opacity: 0.95;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .cta-button {
             display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 15px 40px;
+            padding: 16px 45px;
             text-decoration: none;
             border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin: 0 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             cursor: pointer;
             border: none;
             font-size: 16px;
+            letter-spacing: 0.5px;
         }
 
-        .cta-button:hover {
+        .cta-button.primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
         }
 
         .container {
@@ -123,86 +174,132 @@
         }
 
         .section {
-            padding: 60px 20px;
+            padding: 80px 20px;
         }
 
         .section h2 {
-            font-size: 36px;
-            margin-bottom: 40px;
+            font-size: 42px;
+            margin-bottom: 50px;
             text-align: center;
+            color: #2c3e50;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 18px;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
         }
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
             margin-bottom: 40px;
         }
 
         .feature-card {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
+            border: 1px solid #ecf0f1;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
         }
 
         .feature-card h3 {
             color: #667eea;
-            margin-bottom: 15px;
-            font-size: 24px;
+            margin-bottom: 18px;
+            font-size: 28px;
+            font-weight: 700;
         }
 
         .feature-card p {
-            color: #666;
+            color: #5a6c7d;
             line-height: 1.8;
+            font-size: 16px;
+            font-weight: 300;
         }
 
         .status-banner {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3d0 100%);
+            border-left: 5px solid #f39c12;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 8px;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.1);
         }
 
         .status-banner p {
-            color: #856404;
-            font-weight: bold;
+            color: #d68910;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .status-banner p:last-child {
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 15px;
         }
 
         footer {
-            background: #333;
+            background: #2c3e50;
             color: white;
             text-align: center;
-            padding: 30px 20px;
-            margin-top: 40px;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.3px;
         }
 
         .gallery-preview {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
             margin-bottom: 30px;
         }
 
         .gallery-preview-item {
-            background: #f5f5f5;
-            padding: 20px;
+            background: white;
+            padding: 30px;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #ecf0f1;
+        }
+
+        .gallery-preview-item strong {
+            color: #2c3e50;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         .gallery-preview-item p {
-            margin-top: 10px;
-            color: #666;
+            color: #7f8c8d;
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.6;
         }
 
         /* Modal Styles */
@@ -214,8 +311,9 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             overflow: auto;
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
@@ -226,59 +324,142 @@
 
         .modal-content {
             background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 900px;
-            max-height: 80vh;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 950px;
+            max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .modal-header h2 {
             margin: 0;
             color: #667eea;
+            font-size: 32px;
+            font-weight: 700;
         }
 
         .close-btn {
-            font-size: 28px;
-            font-weight: bold;
-            color: #999;
+            font-size: 32px;
+            font-weight: 300;
+            color: #95a5a6;
             cursor: pointer;
             background: none;
             border: none;
             padding: 0;
+            transition: color 0.3s ease;
+            line-height: 1;
         }
 
         .close-btn:hover {
-            color: #000;
+            color: #2c3e50;
         }
 
         .modal-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
 
         .modal-gallery img {
             width: 100%;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-gallery img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-form input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .contact-form button:active {
+            transform: translateY(0);
+        }
+
+        .form-notice {
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+            font-weight: 300;
         }
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 32px;
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
             }
 
             nav ul {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
+            }
+
+            .section {
+                padding: 50px 20px;
+            }
+
+            .section h2 {
+                font-size: 32px;
             }
 
             .features {
@@ -286,12 +467,14 @@
             }
 
             .modal-content {
-                padding: 20px;
+                padding: 25px;
+                margin: 20px;
                 max-height: 90vh;
             }
 
             .visitor-counter {
-                margin-top: 10px;
+                margin-top: 15px;
+                font-size: 12px;
             }
         }
     </style>
@@ -314,15 +497,17 @@
         <div>
             <h1>Welcome to Evolution</h1>
             <p>Premium Shoes & Clothing for Every Style</p>
-            <a href="index.html" class="cta-button">View Gallery</a>
-            <a href="#contact" class="cta-button">Notify Me</a>
+            <div class="hero-buttons">
+                <a href="index.html" class="cta-button primary">View Gallery</a>
+                <a href="#contact" class="cta-button secondary">Notify Me</a>
+            </div>
         </div>
     </section>
 
     <section class="section" id="about">
         <div class="container">
             <h2>About Evolution</h2>
-            <p style="font-size: 18px; text-align: center; max-width: 800px; margin: 0 auto; color: #666;">
+            <p class="section-subtitle">
                 Evolution is a premium brand dedicated to crafting high-quality shoes and clothing that 
                 combine style, comfort, and durability. Our mission is to help you express your unique 
                 personality through fashion.
@@ -330,7 +515,7 @@
         </div>
     </section>
 
-    <section class="section" style="background: #f5f5f5;" id="products">
+    <section class="section" style="background: white;" id="products">
         <div class="container">
             <h2>Our Collections</h2>
             <div class="features">
@@ -358,7 +543,7 @@
             </div>
 
             <h2>Coming Soon</h2>
-            <p style="text-align: center; font-size: 18px; color: #666; margin-bottom: 30px;">
+            <p class="section-subtitle">
                 We're carefully curating our inventory to bring you the best products. Check back soon!
             </p>
 
@@ -379,33 +564,23 @@
         </div>
     </section>
 
-    <section class="section" style="background: #f5f5f5;" id="contact">
+    <section class="section" style="background: white;" id="contact">
         <div class="container">
             <h2>Stay Updated</h2>
-            <p style="text-align: center; font-size: 18px; color: #666; margin-bottom: 30px;">
+            <p class="section-subtitle">
                 Subscribe to get notified when we restock or launch new products!
             </p>
-            <div style="text-align: center;">
-                <form onsubmit="handleSubscribe(event)" style="max-width: 500px; margin: 0 auto;">
-                    <input 
-                        type="email" 
-                        placeholder="Enter your email" 
-                        required
-                        style="width: 100%; padding: 12px; margin-bottom: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;"
-                    >
-                    <button 
-                        type="submit"
-                        style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: opacity 0.3s;"
-                        onmouseover="this.style.opacity='0.9'"
-                        onmouseout="this.style.opacity='1'"
-                    >
-                        Notify Me
-                    </button>
-                </form>
-                <p style="margin-top: 20px; color: #666; font-size: 14px;">
-                    We promise not to spam you. You'll only hear from us with important updates!
+            <form class="contact-form" onsubmit="handleSubscribe(event)">
+                <input 
+                    type="email" 
+                    placeholder="Enter your email address" 
+                    required
+                >
+                <button type="submit">Notify Me</button>
+                <p class="form-notice">
+                    ✓ We promise not to spam you. You'll only hear from us with important updates!
                 </p>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -438,7 +613,7 @@
 
     <footer>
         <p>&copy; 2026 Evolution - Premium Shoes & Clothing. All rights reserved.</p>
-        <p style="margin-top: 10px; opacity: 0.8;">Currently out of stock • Coming soon with amazing products!</p>
+        <p style="margin-top: 12px; opacity: 0.85;">Currently out of stock • Coming soon with amazing products</p>
     </footer>
 
     <script>
@@ -449,17 +624,14 @@
         // Update visitor counter when page loads
         async function updateVisitorCounter() {
             try {
-                // 1. Get current visitor count from JSONBin
                 const res = await fetch(BIN_URL, {
                     headers: { "X-Master-Key": API_KEY }
                 });
                 const data = await res.json();
                 let count = data.record.visitorCount || 0;
 
-                // 2. Increase the counter by 1
                 count++;
 
-                // 3. Update the JSONBin record
                 await fetch(BIN_URL, {
                     method: "PUT",
                     headers: {
@@ -469,7 +641,6 @@
                     body: JSON.stringify({ visitorCount: count })
                 });
 
-                // 4. Show the count on your page
                 document.getElementById('visitor-count').textContent = count;
             } catch (err) {
                 console.error("Error updating counter:", err);
@@ -478,7 +649,6 @@
         }
 
         function openModal(type) {
-            console.log('Opening modal:', type);
             const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
             const modal = document.getElementById(modalId);
             if (modal) {
@@ -487,7 +657,6 @@
         }
 
         function closeModal(type) {
-            console.log('Closing modal:', type);
             const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
             const modal = document.getElementById(modalId);
             if (modal) {
