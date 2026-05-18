@@ -201,12 +201,13 @@
         }
 
         .modal.active {
-            display: block;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
             background-color: white;
-            margin: 10% auto;
             padding: 30px;
             border-radius: 10px;
             max-width: 900px;
@@ -233,6 +234,7 @@
             cursor: pointer;
             background: none;
             border: none;
+            padding: 0;
         }
 
         .close-btn:hover {
@@ -266,8 +268,8 @@
             }
 
             .modal-content {
-                margin: 30% auto;
                 padding: 20px;
+                max-height: 90vh;
             }
         }
     </style>
@@ -277,10 +279,10 @@
         <nav>
             <a href="home.html" class="logo">🔥 Evolution</a>
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#products">Products</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="index.html">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -307,11 +309,11 @@
         <div class="container">
             <h2>Our Collections</h2>
             <div class="features">
-                <div class="feature-card" onclick="openModal('footwear')">
+                <div class="feature-card" onclick="openModal('footwear'); return false;">
                     <h3>👟 Footwear</h3>
                     <p>Experience comfort and style with our carefully curated collection of premium shoes designed for every occasion. Click to view!</p>
                 </div>
-                <div class="feature-card" onclick="openModal('apparel')">
+                <div class="feature-card" onclick="openModal('apparel'); return false;">
                     <h3>👕 Apparel</h3>
                     <p>Stay fashionable with our exclusive clothing line featuring modern designs and quality materials. Click to view!</p>
                 </div>
@@ -416,13 +418,21 @@
 
     <script>
         function openModal(type) {
+            console.log('Opening modal:', type);
             const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
-            document.getElementById(modalId).classList.add('active');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+            }
         }
 
         function closeModal(type) {
+            console.log('Closing modal:', type);
             const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
-            document.getElementById(modalId).classList.remove('active');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
 
         // Close modal when clicking outside of it
@@ -430,10 +440,10 @@
             const footwearModal = document.getElementById('footwearModal');
             const apparelModal = document.getElementById('apparelModal');
             
-            if (event.target == footwearModal) {
+            if (event.target === footwearModal) {
                 footwearModal.classList.remove('active');
             }
-            if (event.target == apparelModal) {
+            if (event.target === apparelModal) {
                 apparelModal.classList.remove('active');
             }
         }
@@ -446,7 +456,7 @@
         }
 
         // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a.nav-link').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
