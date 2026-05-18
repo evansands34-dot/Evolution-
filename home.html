@@ -70,21 +70,30 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('ChatGPT Image Apr 5, 2026, 05_30_31 PM.png');
+            background-size: cover;
+            background-position: center;
             color: white;
             padding: 100px 20px;
             text-align: center;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .hero p {
             font-size: 20px;
             margin-bottom: 30px;
-            opacity: 0.9;
+            opacity: 0.95;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .cta-button {
@@ -302,10 +311,12 @@
     </header>
 
     <section class="hero">
-        <h1>Welcome to Evolution</h1>
-        <p>Premium Shoes & Clothing for Every Style</p>
-        <a href="index.html" class="cta-button">View Gallery</a>
-        <a href="#contact" class="cta-button">Notify Me</a>
+        <div>
+            <h1>Welcome to Evolution</h1>
+            <p>Premium Shoes & Clothing for Every Style</p>
+            <a href="index.html" class="cta-button">View Gallery</a>
+            <a href="#contact" class="cta-button">Notify Me</a>
+        </div>
     </section>
 
     <section class="section" id="about">
