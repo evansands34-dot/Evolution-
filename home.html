@@ -47,6 +47,7 @@
             list-style: none;
             display: flex;
             gap: 30px;
+            align-items: center;
         }
 
         nav a {
@@ -58,6 +59,14 @@
 
         nav a:hover {
             opacity: 0.8;
+        }
+
+        .visitor-counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         .hero {
@@ -271,6 +280,10 @@
                 padding: 20px;
                 max-height: 90vh;
             }
+
+            .visitor-counter {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -283,6 +296,7 @@
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="index.html">Gallery</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><div class="visitor-counter">👁️ Visitors: <span id="visitor-count">0</span></div></li>
             </ul>
         </nav>
     </header>
@@ -417,6 +431,41 @@
     </footer>
 
     <script>
+        // === GLOBAL VISITOR COUNTER USING JSONBIN ===
+        const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
+        const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
+
+        // Update visitor counter when page loads
+        async function updateVisitorCounter() {
+            try {
+                // 1. Get current visitor count from JSONBin
+                const res = await fetch(BIN_URL, {
+                    headers: { "X-Master-Key": API_KEY }
+                });
+                const data = await res.json();
+                let count = data.record.visitorCount || 0;
+
+                // 2. Increase the counter by 1
+                count++;
+
+                // 3. Update the JSONBin record
+                await fetch(BIN_URL, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": API_KEY
+                    },
+                    body: JSON.stringify({ visitorCount: count })
+                });
+
+                // 4. Show the count on your page
+                document.getElementById('visitor-count').textContent = count;
+            } catch (err) {
+                console.error("Error updating counter:", err);
+                document.getElementById('visitor-count').textContent = "Error";
+            }
+        }
+
         function openModal(type) {
             console.log('Opening modal:', type);
             const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
@@ -465,6 +514,9 @@
                 }
             });
         });
+
+        // Run the counter update when page loads
+        updateVisitorCounter();
     </script>
 </body>
 </html>
