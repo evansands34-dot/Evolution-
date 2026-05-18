@@ -53,6 +53,7 @@
             color: white;
             text-decoration: none;
             transition: opacity 0.3s;
+            cursor: pointer;
         }
 
         nav a:hover {
@@ -87,6 +88,9 @@
             font-weight: bold;
             transition: transform 0.3s, box-shadow 0.3s;
             margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
         }
 
         .cta-button:hover {
@@ -124,6 +128,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
         .feature-card:hover {
@@ -182,6 +187,70 @@
             color: #666;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 900px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #667eea;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .modal-gallery img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 32px;
@@ -194,6 +263,11 @@
 
             .features {
                 grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 30% auto;
+                padding: 20px;
             }
         }
     </style>
@@ -233,13 +307,13 @@
         <div class="container">
             <h2>Our Collections</h2>
             <div class="features">
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('footwear')">
                     <h3>👟 Footwear</h3>
-                    <p>Experience comfort and style with our carefully curated collection of premium shoes designed for every occasion.</p>
+                    <p>Experience comfort and style with our carefully curated collection of premium shoes designed for every occasion. Click to view!</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('apparel')">
                     <h3>👕 Apparel</h3>
-                    <p>Stay fashionable with our exclusive clothing line featuring modern designs and quality materials.</p>
+                    <p>Stay fashionable with our exclusive clothing line featuring modern designs and quality materials. Click to view!</p>
                 </div>
                 <div class="feature-card">
                     <h3>🎨 Limited Editions</h3>
@@ -308,12 +382,62 @@
         </div>
     </section>
 
+    <!-- Footwear Modal -->
+    <div id="footwearModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>👟 Footwear Collection</h2>
+                <button class="close-btn" onclick="closeModal('footwear')">&times;</button>
+            </div>
+            <div class="modal-gallery">
+                <img src="ChatGPT Image Apr 5, 2026, 05_29_44 PM.png" alt="Footwear 1">
+            </div>
+        </div>
+    </div>
+
+    <!-- Apparel Modal -->
+    <div id="apparelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>👕 Apparel Collection</h2>
+                <button class="close-btn" onclick="closeModal('apparel')">&times;</button>
+            </div>
+            <div class="modal-gallery">
+                <img src="ChatGPT Image Apr 5, 2026, 05_30_08 PM.png" alt="Apparel 1">
+                <img src="ChatGPT Image Apr 5, 2026, 05_29_10 PM.png" alt="Apparel 2">
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Evolution - Premium Shoes & Clothing. All rights reserved.</p>
         <p style="margin-top: 10px; opacity: 0.8;">Currently out of stock • Coming soon with amazing products!</p>
     </footer>
 
     <script>
+        function openModal(type) {
+            const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(type) {
+            const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const footwearModal = document.getElementById('footwearModal');
+            const apparelModal = document.getElementById('apparelModal');
+            
+            if (event.target == footwearModal) {
+                footwearModal.classList.remove('active');
+            }
+            if (event.target == apparelModal) {
+                apparelModal.classList.remove('active');
+            }
+        }
+
         function handleSubscribe(event) {
             event.preventDefault();
             const email = event.target.querySelector('input[type="email"]').value;
