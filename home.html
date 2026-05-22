@@ -73,6 +73,28 @@
             font-weight: 600;
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .visitor-counter:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.05);
+        }
+
+        .counter-badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12px;
+            min-width: 40px;
+            text-align: center;
         }
 
         .hero {
@@ -488,7 +510,7 @@
                 <li><a href="#products" class="nav-link">Products</a></li>
                 <li><a href="index.html">Gallery</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><div class="visitor-counter">👁️ Visitors: <span id="visitor-count">0</span></div></li>
+                <li><div class="visitor-counter" title="All-time visitors"><span>👁️</span> <span class="counter-badge" id="visitor-count">Loading...</span></div></li>
             </ul>
         </nav>
     </header>
@@ -630,33 +652,46 @@
     </footer>
 
     <script>
-        // === GLOBAL VISITOR COUNTER USING JSONBIN ===
+        // === IMPROVED ALL-TIME VISITOR COUNTER ===
         const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
         const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
+        let counterUpdated = false;
 
-        // Update visitor counter when page loads
-        async function updateVisitorCounter() {
+        async function initializeVisitorCounter() {
             try {
-                const res = await fetch(BIN_URL, {
+                // First, GET the current count
+                const getRes = await fetch(BIN_URL, {
+                    method: "GET",
                     headers: { "X-Master-Key": API_KEY }
                 });
-                const data = await res.json();
-                let count = data.record.visitorCount || 0;
 
-                count++;
+                const getData = await getRes.json();
+                let currentCount = getData.record.visitorCount || 0;
 
-                await fetch(BIN_URL, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": API_KEY
-                    },
-                    body: JSON.stringify({ visitorCount: count })
-                });
+                // Display current count immediately
+                document.getElementById('visitor-count').textContent = currentCount;
 
-                document.getElementById('visitor-count').textContent = count;
+                // Only increment if we haven't already updated this session
+                if (!counterUpdated) {
+                    currentCount++;
+                    counterUpdated = true;
+
+                    // Then, PUT the incremented count
+                    await fetch(BIN_URL, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Master-Key": API_KEY
+                        },
+                        body: JSON.stringify({ visitorCount: currentCount })
+                    });
+
+                    // Update display with new count
+                    document.getElementById('visitor-count').textContent = currentCount;
+                    console.log("Visitor count updated to:", currentCount);
+                }
             } catch (err) {
-                console.error("Error updating counter:", err);
+                console.error("Error with visitor counter:", err);
                 document.getElementById('visitor-count').textContent = "Error";
             }
         }
@@ -726,8 +761,8 @@
             });
         });
 
-        // Run the counter update when page loads
-        updateVisitorCounter();
+        // Initialize visitor counter when page loads
+        document.addEventListener('DOMContentLoaded', initializeVisitorCounter);
     </script>
 </body>
 </html>
