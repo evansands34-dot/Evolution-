@@ -527,9 +527,9 @@
                     <h3>👕 Apparel</h3>
                     <p>Stay fashionable with our exclusive clothing line featuring modern designs and quality materials. Click to view!</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" onclick="openModal('limited'); return false;">
                     <h3>🎨 Limited Editions</h3>
-                    <p>Discover unique, limited-edition pieces that showcase our creative vision and innovation.</p>
+                    <p>Discover unique, limited-edition pieces that showcase our creative vision and innovation. Click to view!</p>
                 </div>
             </div>
         </div>
@@ -611,6 +611,19 @@
         </div>
     </div>
 
+    <!-- Limited Editions Modal -->
+    <div id="limitedModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎨 Limited Editions Collection</h2>
+                <button class="close-btn" onclick="closeModal('limited')">&times;</button>
+            </div>
+            <div class="modal-gallery">
+                <img src="limited-edition-tracksuit.png" alt="Limited Edition Tracksuit">
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Evolution - Premium Shoes & Clothing. All rights reserved.</p>
         <p style="margin-top: 12px; opacity: 0.85;">Currently out of stock • Coming soon with amazing products</p>
@@ -649,7 +662,14 @@
         }
 
         function openModal(type) {
-            const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
+            let modalId;
+            if (type === 'footwear') {
+                modalId = 'footwearModal';
+            } else if (type === 'apparel') {
+                modalId = 'apparelModal';
+            } else if (type === 'limited') {
+                modalId = 'limitedModal';
+            }
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.add('active');
@@ -657,7 +677,14 @@
         }
 
         function closeModal(type) {
-            const modalId = type === 'footwear' ? 'footwearModal' : 'apparelModal';
+            let modalId;
+            if (type === 'footwear') {
+                modalId = 'footwearModal';
+            } else if (type === 'apparel') {
+                modalId = 'apparelModal';
+            } else if (type === 'limited') {
+                modalId = 'limitedModal';
+            }
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.remove('active');
@@ -668,12 +695,16 @@
         window.onclick = function(event) {
             const footwearModal = document.getElementById('footwearModal');
             const apparelModal = document.getElementById('apparelModal');
+            const limitedModal = document.getElementById('limitedModal');
             
             if (event.target === footwearModal) {
                 footwearModal.classList.remove('active');
             }
             if (event.target === apparelModal) {
                 apparelModal.classList.remove('active');
+            }
+            if (event.target === limitedModal) {
+                limitedModal.classList.remove('active');
             }
         }
 
