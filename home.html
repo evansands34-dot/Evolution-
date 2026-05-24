@@ -6,220 +6,259 @@
 <title>Evolution</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-
-body{
-background:#0a0a0a;
-color:white;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* INTRO */
-#intro{
-position:fixed;
-inset:0;
-background:linear-gradient(135deg,#000,#1a0000);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:9999;
-animation:fadeOut 1s ease 2.5s forwards;
-}
-
-#intro h1{
-font-size:42px;
-color:#ff1a1a;
-}
-
-#intro p{
-color:#aaa;
-margin-top:10px;
-}
-
-@keyframes fadeOut{
-to{opacity:0;visibility:hidden;}
+body {
+    background: #0a0a0a;
+    color: white;
 }
 
 /* HEADER */
-header{
-background:#000;
-display:flex;
-justify-content:space-between;
-padding:20px;
-border-bottom:2px solid #ff1a1a;
+header {
+    background: black;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid red;
 }
 
-.logo{
-color:#ff1a1a;
-font-weight:bold;
-font-size:20px;
+nav {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
 }
 
-nav a{
-color:white;
-margin-left:15px;
-text-decoration:none;
+.logo {
+    color: red;
+    font-size: 26px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: red;
 }
 
 /* HERO */
-.hero{
-height:80vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-background:
-linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
-url('ChatGPT Image Apr 5, 2026, 05_30_31 PM.png');
-background-size:cover;
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+    url('ChatGPT Image Apr 5, 2026, 05_30_31 PM.png');
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    animation: fadeIn 1.2s ease-in;
 }
 
-.hero h2{
-font-size:50px;
-color:#ff1a1a;
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 
-.btn{
-margin-top:15px;
-padding:12px 22px;
-background:#ff1a1a;
-border:none;
-color:white;
-cursor:pointer;
-border-radius:8px;
+.hero h1 {
+    font-size: 60px;
+    color: red;
 }
 
-/* SECTION */
-.section{
-padding:60px 20px;
-text-align:center;
+.hero p {
+    font-size: 22px;
+    margin-top: 10px;
+    opacity: 0.9;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-top:20px;
+.btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: red;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.card{
-background:#111;
-padding:20px;
-border:1px solid #ff1a1a;
-border-radius:10px;
-cursor:pointer;
+.btn:hover {
+    background: darkred;
+}
+
+/* SECTIONS */
+section {
+    padding: 80px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+h2 {
+    color: red;
+    margin-bottom: 20px;
+}
+
+/* GALLERY (RESTORED) */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    background: #111;
+    padding: 20px;
+    border: 1px solid red;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
 }
 
 /* MODAL */
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.8);
-justify-content:center;
-align-items:center;
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
 }
 
-.modal.active{display:flex;}
-
-.modal-box{
-background:white;
-color:black;
-padding:20px;
-border-radius:10px;
-max-width:500px;
+.modal-content {
+    background: #111;
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+    border: 2px solid red;
 }
 
-.modal-box img{
-width:100%;
-margin-top:10px;
-border-radius:10px;
+.modal img {
+    width: 100%;
+    margin-top: 10px;
 }
 
-/* FOOTER */
-footer{
-background:#000;
-text-align:center;
-padding:20px;
-border-top:2px solid #ff1a1a;
+.close {
+    float: right;
+    cursor: pointer;
+    color: red;
+    font-size: 22px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<div id="intro">
-<h1>Evolution</h1>
-<p>Where Style Meets Motion</p>
-</div>
-
 <header>
-<div class="logo">🔥 Evolution</div>
 <nav>
-<a href="#products">Products</a>
-<a href="#contact">Contact</a>
+    <a class="logo">EVOLUTION</a>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+    </ul>
 </nav>
 </header>
 
-<section class="hero">
-<h2>Evolution</h2>
-<p>Where Style Meets Motion</p>
-<button class="btn">Explore</button>
+<!-- HERO -->
+<div class="hero">
+    <div>
+        <h1>EVOLUTION</h1>
+        <p>Where style meets motion</p>
+        <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+            Explore
+        </button>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+    <h2>About</h2>
+    <p>Evolution is a streetwear + sneaker brand focused on bold design and motion culture.</p>
 </section>
 
-<section class="section" id="products">
-<h2>Collections</h2>
+<!-- PRODUCTS -->
+<section id="products">
+    <h2>Products</h2>
 
-<div class="cards">
-<div class="card" onclick="openModal('footwear')">Footwear</div>
-<div class="card" onclick="openModal('apparel')">Apparel</div>
-<div class="card" onclick="openModal('limited')">Limited</div>
-</div>
+    <div class="gallery">
+        <div class="gallery-item" onclick="openModal('apparel')">👕 Apparel</div>
+        <div class="gallery-item" onclick="openModal('footwear')">👟 Footwear</div>
+        <div class="gallery-item" onclick="openModal('limited')">🔥 Limited</div>
+    </div>
 </section>
 
-<!-- MODALS FIXED -->
-<div class="modal" id="footwear">
-<div class="modal-box">
-<h3>Footwear</h3>
-<img src="ChatGPT Image Apr 5, 2026, 05_29_44 PM.png">
-</div>
+<!-- GALLERY (FIXED — THIS WAS MISSING BEFORE) -->
+<section id="gallery">
+    <h2>Gallery</h2>
+
+    <div class="gallery">
+        <div class="gallery-item">Design 1</div>
+        <div class="gallery-item">Design 2</div>
+        <div class="gallery-item">Design 3</div>
+        <div class="gallery-item">Design 4</div>
+    </div>
+</section>
+
+<!-- MODALS -->
+<div id="apparel" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('apparel')">X</span>
+        <h2>Apparel</h2>
+        <img src="ChatGPT Image Apr 5, 2026, 05_30_08 PM.png">
+        <img src="ChatGPT Image Apr 5, 2026, 05_29_10 PM.png">
+    </div>
 </div>
 
-<div class="modal" id="apparel">
-<div class="modal-box">
-<h3>Apparel</h3>
-<img src="ChatGPT Image Apr 5, 2026, 05_30_08 PM.png">
-<img src="ChatGPT Image Apr 5, 2026, 05_29_10 PM.png">
-</div>
-</div>
-
-<div class="modal" id="limited">
-<div class="modal-box">
-<h3>Limited Edition</h3>
-<img src="limited-edition-tracksuit.png">
-</div>
+<div id="footwear" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('footwear')">X</span>
+        <h2>Footwear</h2>
+        <img src="ChatGPT Image Apr 5, 2026, 05_29_44 PM.png">
+    </div>
 </div>
 
-<footer>
-© 2026 Evolution — Where Style Meets Motion
-</footer>
+<div id="limited" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('limited')">X</span>
+        <h2>Limited Drop</h2>
+        <img src="limited-edition-tracksuit.png">
+    </div>
+</div>
 
 <script>
-setTimeout(()=>{
-document.getElementById("intro").style.display="none";
-},2500);
-
 function openModal(id){
-document.getElementById(id).classList.add("active");
+    document.getElementById(id).style.display = "flex";
 }
 
-document.querySelectorAll(".modal").forEach(m=>{
-m.onclick=e=>{
-if(e.target===m) m.classList.remove("active");
+function closeModal(id){
+    document.getElementById(id).style.display = "none";
 }
-});
 </script>
 
 </body>
