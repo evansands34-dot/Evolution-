@@ -4,28 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evolution - Premium Shoes & Clothing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Orbitron', sans-serif;
             line-height: 1.6;
-            color: #2c3e50;
-            background-color: #f8f9fa;
+            color: white;
+            background-color: #0d0d0d;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background:
+            radial-gradient(circle at top left, rgba(255,0,0,0.25), transparent 30%),
+            radial-gradient(circle at bottom right, rgba(255,255,255,0.08), transparent 25%);
+            z-index: -1;
+            animation: bgMove 8s infinite alternate;
+        }
+
+        @keyframes bgMove {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            z-index: 9999;
+            animation: fadeOut 2s forwards;
+            animation-delay: 2s;
+            font-weight: bold;
+            text-shadow: 0 0 30px red;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
 
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255, 0, 0, 0.9);
             color: white;
             padding: 20px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         nav {
@@ -62,7 +112,8 @@
         }
 
         nav a:hover {
-            opacity: 0.85;
+            opacity: 0.7;
+            color: black;
         }
 
         .visitor-counter {
@@ -87,8 +138,8 @@
 
         .counter-badge {
             display: inline-block;
-            background: #f39c12;
-            color: white;
+            background: white;
+            color: red;
             padding: 3px 10px;
             border-radius: 12px;
             font-weight: 700;
@@ -110,6 +161,7 @@
             justify-content: center;
             flex-direction: column;
             position: relative;
+            animation: fadeIn 1.5s;
         }
 
         .hero::before {
@@ -132,7 +184,7 @@
         .hero h1 {
             font-size: 56px;
             margin-bottom: 16px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 0 20px red;
             font-weight: 700;
             letter-spacing: -1px;
         }
@@ -168,24 +220,26 @@
 
         .cta-button.primary {
             background: white;
-            color: #667eea;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: red;
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
         }
 
         .cta-button.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 0, 0, 0.5);
+            background: red;
+            color: white;
         }
 
         .cta-button.secondary {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 0, 0, 0.3);
             color: white;
             border: 2px solid white;
             backdrop-filter: blur(10px);
         }
 
         .cta-button.secondary:hover {
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 0, 0, 0.7);
             transform: translateY(-2px);
         }
 
@@ -197,20 +251,21 @@
 
         .section {
             padding: 80px 20px;
+            background: #0d0d0d;
         }
 
         .section h2 {
             font-size: 42px;
             margin-bottom: 50px;
             text-align: center;
-            color: #2c3e50;
+            color: white;
             font-weight: 700;
             letter-spacing: -1px;
         }
 
         .section-subtitle {
             text-align: center;
-            color: #7f8c8d;
+            color: #ccc;
             font-size: 18px;
             margin-bottom: 60px;
             max-width: 600px;
@@ -227,47 +282,47 @@
         }
 
         .feature-card {
-            background: white;
+            background: #161616;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.25);
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid #ecf0f1;
+            border: 1px solid rgba(255, 0, 0, 0.3);
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7);
         }
 
         .feature-card h3 {
-            color: #667eea;
+            color: red;
             margin-bottom: 18px;
             font-size: 28px;
             font-weight: 700;
         }
 
         .feature-card p {
-            color: #5a6c7d;
+            color: #ccc;
             line-height: 1.8;
             font-size: 16px;
             font-weight: 300;
         }
 
         .status-banner {
-            background: linear-gradient(135deg, #fff9e6 0%, #fff3d0 100%);
-            border-left: 5px solid #f39c12;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2) 0%, rgba(255, 0, 0, 0.1) 100%);
+            border-left: 5px solid red;
             padding: 30px;
             margin: 40px 0;
             border-radius: 8px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.1);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.1);
         }
 
         .status-banner p {
-            color: #d68910;
+            color: red;
             font-weight: 600;
             margin-bottom: 10px;
             font-size: 16px;
@@ -277,14 +332,16 @@
             margin-bottom: 0;
             font-weight: 400;
             font-size: 15px;
+            color: #ccc;
         }
 
         footer {
-            background: #2c3e50;
+            background: #000;
             color: white;
             text-align: center;
             padding: 40px 20px;
             margin-top: 60px;
+            border-top: 2px solid red;
         }
 
         footer p {
@@ -301,16 +358,16 @@
         }
 
         .gallery-preview-item {
-            background: white;
+            background: #161616;
             padding: 30px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            border: 1px solid #ecf0f1;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.08);
+            border: 1px solid rgba(255, 0, 0, 0.2);
         }
 
         .gallery-preview-item strong {
-            color: #2c3e50;
+            color: red;
             font-size: 18px;
             display: block;
             margin-bottom: 12px;
@@ -318,7 +375,7 @@
         }
 
         .gallery-preview-item p {
-            color: #7f8c8d;
+            color: #ccc;
             font-size: 15px;
             font-weight: 300;
             line-height: 1.6;
@@ -333,7 +390,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
             overflow: auto;
             backdrop-filter: blur(5px);
         }
@@ -345,13 +402,14 @@
         }
 
         .modal-content {
-            background-color: white;
+            background-color: #161616;
             padding: 40px;
             border-radius: 15px;
             max-width: 950px;
             max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(255, 0, 0, 0.3);
+            border: 2px solid red;
         }
 
         .modal-header {
@@ -363,7 +421,7 @@
 
         .modal-header h2 {
             margin: 0;
-            color: #667eea;
+            color: red;
             font-size: 32px;
             font-weight: 700;
         }
@@ -371,7 +429,7 @@
         .close-btn {
             font-size: 32px;
             font-weight: 300;
-            color: #95a5a6;
+            color: #ccc;
             cursor: pointer;
             background: none;
             border: none;
@@ -381,7 +439,7 @@
         }
 
         .close-btn:hover {
-            color: #2c3e50;
+            color: red;
         }
 
         .modal-gallery {
@@ -393,7 +451,7 @@
         .modal-gallery img {
             width: 100%;
             border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
 
@@ -411,23 +469,29 @@
             width: 100%;
             padding: 15px 20px;
             margin-bottom: 15px;
-            border: 2px solid #ecf0f1;
+            border: 2px solid red;
             border-radius: 8px;
             font-size: 16px;
             font-family: inherit;
+            background: #161616;
+            color: white;
             transition: border-color 0.3s ease;
+        }
+
+        .contact-form input::placeholder {
+            color: #999;
         }
 
         .contact-form input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: white;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
         }
 
         .contact-form button {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: red;
             color: white;
             border: none;
             border-radius: 8px;
@@ -440,7 +504,9 @@
 
         .contact-form button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
+            background: white;
+            color: red;
         }
 
         .contact-form button:active {
@@ -449,9 +515,20 @@
 
         .form-notice {
             margin-top: 20px;
-            color: #7f8c8d;
+            color: #999;
             font-size: 14px;
             font-weight: 300;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
@@ -502,6 +579,12 @@
     </style>
 </head>
 <body>
+    <div class="bg"></div>
+
+    <div id="loader">
+        🔥 Evolution
+    </div>
+
     <header>
         <nav>
             <a href="home.html" class="logo">🔥 Evolution</a>
@@ -538,7 +621,7 @@
         </div>
     </section>
 
-    <section class="section" style="background: white;" id="products">
+    <section class="section" style="background: #161616;" id="products">
         <div class="container">
             <h2>Our Collections</h2>
             <div class="features">
@@ -587,7 +670,7 @@
         </div>
     </section>
 
-    <section class="section" style="background: white;" id="contact">
+    <section class="section" style="background: #161616;" id="contact">
         <div class="container">
             <h2>Stay Updated</h2>
             <p class="section-subtitle">
