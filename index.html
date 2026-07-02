@@ -202,9 +202,10 @@
     <div id="counter">Visitor Count: <span id="visitors">0</span></div>
 
     <script>
-        // === GLOBAL VISITOR COUNTER USING JSONBIN ===
+        // === ALL-TIME VISITOR COUNTER (FIXED) ===
         const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
         const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
+        let counterUpdated = false;
 
         async function updateVisitorCounter() {
             try {
@@ -215,21 +216,25 @@
                 const data = await res.json();
                 let count = data.record.visitorCount || 0;
 
-                // 2. Increase the counter by 1
-                count++;
+                // 2. Only increment if we haven't already updated this session
+                if (!counterUpdated) {
+                    count++;
+                    counterUpdated = true;
 
-                // 3. Update the JSONBin record
-                await fetch(BIN_URL, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": API_KEY
-                    },
-                    body: JSON.stringify({ visitorCount: count })
-                });
+                    // 3. Update the JSONBin record
+                    await fetch(BIN_URL, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Master-Key": API_KEY
+                        },
+                        body: JSON.stringify({ visitorCount: count })
+                    });
+                }
 
-                // 4. Show the count on your page
+                // 4. ALWAYS display the INCREMENTED count
                 document.getElementById('visitors').textContent = count;
+                console.log("Visitor count:", count);
             } catch (err) {
                 console.error("Error updating counter:", err);
                 document.getElementById('visitors').textContent = "Error";

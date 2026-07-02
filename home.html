@@ -736,7 +736,7 @@
     </footer>
 
     <script>
-        // === IMPROVED ALL-TIME VISITOR COUNTER ===
+        // === ALL-TIME VISITOR COUNTER (FIXED) ===
         const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
         const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
         let counterUpdated = false;
@@ -751,9 +751,6 @@
 
                 const getData = await getRes.json();
                 let currentCount = getData.record.visitorCount || 0;
-
-                // Display current count immediately
-                document.getElementById('visitor-count').textContent = currentCount;
 
                 // Only increment if we haven't already updated this session
                 if (!counterUpdated) {
@@ -770,10 +767,11 @@
                         body: JSON.stringify({ visitorCount: currentCount })
                     });
 
-                    // Update display with new count
-                    document.getElementById('visitor-count').textContent = currentCount;
                     console.log("Visitor count updated to:", currentCount);
                 }
+
+                // ALWAYS display the INCREMENTED count
+                document.getElementById('visitor-count').textContent = currentCount;
             } catch (err) {
                 console.error("Error with visitor counter:", err);
                 document.getElementById('visitor-count').textContent = "Error";
