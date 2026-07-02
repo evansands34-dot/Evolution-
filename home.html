@@ -736,14 +736,13 @@
     </footer>
 
     <script>
-        // === ALL-TIME VISITOR COUNTER (FIXED) ===
+        // === ALL-TIME VISITOR COUNTER - ALWAYS INCREMENT ===
         const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
         const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
-        let counterUpdated = false;
 
         async function initializeVisitorCounter() {
             try {
-                // First, GET the current count
+                // 1. Get current visitor count
                 const getRes = await fetch(BIN_URL, {
                     method: "GET",
                     headers: { "X-Master-Key": API_KEY }
@@ -752,26 +751,22 @@
                 const getData = await getRes.json();
                 let currentCount = getData.record.visitorCount || 0;
 
-                // Only increment if we haven't already updated this session
-                if (!counterUpdated) {
-                    currentCount++;
-                    counterUpdated = true;
+                // 2. INCREMENT immediately (no session check)
+                currentCount++;
 
-                    // Then, PUT the incremented count
-                    await fetch(BIN_URL, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-Master-Key": API_KEY
-                        },
-                        body: JSON.stringify({ visitorCount: currentCount })
-                    });
+                // 3. Update JSONBin
+                await fetch(BIN_URL, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": API_KEY
+                    },
+                    body: JSON.stringify({ visitorCount: currentCount })
+                });
 
-                    console.log("Visitor count updated to:", currentCount);
-                }
-
-                // ALWAYS display the INCREMENTED count
+                // 4. Display the NEW count
                 document.getElementById('visitor-count').textContent = currentCount;
+                console.log("Visitor count updated to:", currentCount);
             } catch (err) {
                 console.error("Error with visitor counter:", err);
                 document.getElementById('visitor-count').textContent = "Error";
@@ -808,7 +803,7 @@
             }
         }
 
-        // Close modal when clicking outside of it
+        // Close modal when clicking outside
         window.onclick = function(event) {
             const footwearModal = document.getElementById('footwearModal');
             const apparelModal = document.getElementById('apparelModal');
