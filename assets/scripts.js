@@ -24,9 +24,9 @@ function loadIndexProducts(){
       <div class="product-title">${p.name}</div>
       <div class="product-price">$${formatPrice(p.price)}</div>
       <p>${p.description}</p>
-      <div style="margin-top:8px">
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
         <a class="btn" href="product.html?id=${p.id}">View</a>
-        <button class="btn" onclick="addToCart('${p.id}',1)" style="background:#28a745;margin-left:8px">Add to cart</button>
+        <button class="btn" onclick="addToCart('${p.id}',1)" style="background:#111;margin-left:8px">Add to cart</button>
       </div>
     `;
     container.appendChild(el);
@@ -41,14 +41,17 @@ function loadProductPage(){
   const p = getProductById(id);
   if(!p){ target.innerHTML = '<p>Product not found</p>'; return; }
   target.innerHTML = `
-    <div class="product-card">
+    <div class="product-card detail-top">
       <img src="${p.img}" alt="${p.name}">
-      <h2>${p.name}</h2>
-      <div class="product-price">$${formatPrice(p.price)}</div>
-      <p>${p.description}</p>
-      <div style="margin-top:8px">
-        <label>Quantity: <input id="qty-input" type="number" value="1" min="1" style="width:60px"></label>
-        <button class="btn" id="add-cart-btn" style="background:#28a745;margin-left:8px">Add to cart</button>
+      <div class="info">
+        <h2>${p.name}</h2>
+        <div class="price">$${formatPrice(p.price)}</div>
+        <p>${p.description}</p>
+        <div style="margin-top:12px;display:flex;align-items:center;gap:10px">
+          <label>Quantity: <input id="qty-input" type="number" value="1" min="1" style="width:60px"></label>
+          <button class="btn" id="add-cart-btn">Add to cart</button>
+        </div>
+        <div style="margin-top:8px"><a href="#reviews-section">See reviews ↓</a></div>
       </div>
     </div>
   `;
@@ -110,14 +113,26 @@ function addToCart(id, qty){
   else cart.push({id: p.id, name: p.name, price: p.price, qty});
   saveCart(cart);
   updateCartCount();
-  alert('Added to cart');
+  // small visual confirmation
+  const b = document.createElement('div');
+  b.style.position = 'fixed';
+  b.style.right = '16px';
+  b.style.bottom = '16px';
+  b.style.background = 'var(--accent)';
+  b.style.color = '#fff';
+  b.style.padding = '10px 14px';
+  b.style.borderRadius = '6px';
+  b.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+  b.textContent = 'Added to cart';
+  document.body.appendChild(b);
+  setTimeout(()=>{ b.remove(); }, 1300);
 }
 
 function updateCartCount(){
   const cart = getCart();
   const count = cart.reduce((s,i)=>s+i.qty,0);
   const link = document.getElementById('cart-link');
-  if(link) link.textContent = `Cart (${count})`;
+  if(link) link.innerHTML = `<span class="cart-icon">🛒</span><span class="cart-text">Cart (${count})</span>`;
 }
 
 function renderCartPage(){

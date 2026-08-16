@@ -9,14 +9,17 @@
 <body>
   <header class="site-header">
     <h1><a href="/">Evolution</a></h1>
-    <nav>
-      <a href="cart.html" id="cart-link">Cart (0)</a>
+    <nav class="top-nav">
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="index.html" class="nav-link nav-active">Shopping</a>
+      <a href="cart.html" id="cart-link" class="cart-link" aria-label="Cart"></a>
     </nav>
   </header>
 
   <main class="container">
-    <a href="/">← Back to products</a>
-    <div id="product-detail"></div>
+    <a href="index.html">← Back to products</a>
+
+    <div id="product-detail" class="product-detail"></div>
 
     <section class="reviews" id="reviews-section">
       <h3>Reviews</h3>
@@ -42,7 +45,7 @@
           Comment<br>
           <textarea id="review-comment" rows="3" required></textarea>
         </label><br>
-        <button type="submit">Submit review</button>
+        <button type="submit" class="btn">Submit review</button>
       </form>
     </section>
   </main>
@@ -65,6 +68,8 @@
         document.getElementById('reviewer-name').value = '';
         document.getElementById('review-comment').value = '';
         renderReviews(id);
+        // Scroll to reviews list so user can see it
+        document.getElementById('reviews-list').scrollIntoView({behavior:'smooth'});
       });
     });
   </script>

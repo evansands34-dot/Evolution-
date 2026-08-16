@@ -9,8 +9,10 @@
 <body>
   <header class="site-header">
     <h1><a href="/">Evolution</a></h1>
-    <nav>
-      <a href="cart.html" id="cart-link">Cart (0)</a>
+    <nav class="top-nav">
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="index.html" class="nav-link nav-active">Shopping</a>
+      <a href="cart.html" id="cart-link" class="cart-link" aria-label="Cart"></a>
     </nav>
   </header>
 
@@ -33,7 +35,7 @@
           Card number (demo only)<br>
           <input type="text" id="card" required>
         </label><br>
-        <button type="submit">Place Order</button>
+        <button type="submit" class="btn">Place Order</button>
       </form>
       <div id="order-result" class="order-result"></div>
     </section>
@@ -50,7 +52,6 @@
         e.preventDefault();
         const cart = getCart();
         if(!cart || cart.length === 0) return alert('Your cart is empty');
-        // Simple demo checkout: create order summary and clear cart
         const fullname = document.getElementById('fullname').value.trim();
         const address = document.getElementById('address').value.trim();
         const card = document.getElementById('card').value.trim();
@@ -64,7 +65,6 @@
           items: cart,
           placedAt: new Date().toISOString()
         };
-        // In real app you'd send to server. Here we show confirmation and clear cart.
         localStorage.removeItem('evo_cart');
         renderCartPage();
         updateCartCount();
