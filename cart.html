@@ -1,131 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Cart / Checkout - Evolution</title>
-    <style>
-        body{font-family:'Segoe UI',Tahoma,Arial;background:#f8f9fa;color:#2c3e50;padding:20px}
-        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:14px 0;margin-bottom:18px}
-        nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
-        .logo{font-weight:700;color:#fff;text-decoration:none}
-        nav ul{list-style:none;display:flex;gap:18px;align-items:center}
-        nav a{color:#fff;text-decoration:none;font-weight:500}
-        .wrap{max-width:1000px;margin:0 auto}
-        .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
-        .card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
-        .item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
-        .item img{width:88px;height:88px;object-fit:cover}
-        .qty{width:64px}
-        .total{font-weight:700;font-size:20px;color:#222}
-        .checkout-btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:12px;border:none;border-radius:8px;cursor:pointer;width:100%}
-        a{color:#667eea}
-        @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cart & Checkout - Evolution</title>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="home.html" class="logo">🔥 Evolution</a>
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="shop.html">Products</a></li>
-                <li><a href="index.html">Gallery</a></li>
-                <li><a href="home.html#contact">Contact</a></li>
-            </ul>
-            <div>
-                <a style="background:#fff;padding:6px 10px;border-radius:18px;color:#333;text-decoration:none" href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-            </div>
-        </nav>
-    </header>
+  <header class="site-header">
+    <h1><a href="/">Evolution</a></h1>
+    <nav>
+      <a href="cart.html" id="cart-link">Cart (0)</a>
+    </nav>
+  </header>
 
-    <div class="wrap">
-        <h1>🛒 Your Cart</h1>
-        <div class="grid">
-            <div>
-                <div class="card" id="cartArea">Loading cart...</div>
-            </div>
-            <div>
-                <div class="card">
-                    <h3>Checkout</h3>
-                    <div style="margin:8px 0">
-                        <label>Name</label>
-                        <input id="cname" placeholder="Full name" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px">
-                    </div>
-                    <div style="margin:8px 0">
-                        <label>Address</label>
-                        <input id="caddr" placeholder="Shipping address" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px">
-                    </div>
-                    <div style="margin:8px 0">
-                        <label>Payment (mock)</label>
-                        <input id="ccard" placeholder="Card number" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px">
-                    </div>
-                    <div style="margin-top:10px">
-                        <div style="display:flex;justify-content:space-between"><div>Subtotal</div><div id="subtotal">$0.00</div></div>
-                        <div style="display:flex;justify-content:space-between;margin-top:6px"><div>Shipping</div><div id="shipping">$5.00</div></div>
-                        <div style="display:flex;justify-content:space-between;margin-top:6px"><div class="total">Total</div><div class="total" id="grand">$0.00</div></div>
-                    </div>
-                    <div style="margin-top:12px"><button class="checkout-btn" onclick="checkout()">Place Order</button></div>
-                    <div style="margin-top:8px;font-size:13px;color:#666">This is a demo checkout — no real payments are processed.</div>
-                </div>
-            </div>
-        </div>
-        <p style="margin-top:12px"><a href="shop.html">Continue shopping</a></p>
-    </div>
+  <main class="container">
+    <h2>Your Cart</h2>
+    <div id="cart-contents"></div>
 
-    <script src="products.js"></script>
-    <script>
-        function getCart(){try{return JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){return []}}
-        function setCart(c){localStorage.setItem('cart',JSON.stringify(c));renderCart();updateCartCount();}
+    <section class="checkout">
+      <h3>Checkout</h3>
+      <form id="checkout-form">
+        <label>
+          Full name<br>
+          <input type="text" id="fullname" required>
+        </label><br>
+        <label>
+          Address<br>
+          <input type="text" id="address" required>
+        </label><br>
+        <label>
+          Card number (demo only)<br>
+          <input type="text" id="card" required>
+        </label><br>
+        <button type="submit">Place Order</button>
+      </form>
+      <div id="order-result" class="order-result"></div>
+    </section>
+  </main>
 
-        function renderCart(){
-            const cart = getCart();
-            const area = document.getElementById('cartArea');
-            if(cart.length===0){area.innerHTML='<p>Your cart is empty.</p>';document.getElementById('subtotal').textContent='$0.00';document.getElementById('grand').textContent='$0.00';updateCartCount();return}
-            let html='';
-            let subtotal=0;
-            cart.forEach(it=>{
-                const p = window.products.find(x=>x.id===it.id);
-                if(!p) return;
-                const line = p.price*it.quantity; subtotal += line;
-                html += `
-                    <div class="item">
-                        <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">
-                        <div style="flex:1">
-                            <a href="product.html?id=${p.id}"><strong>${p.name}</strong></a>
-                            <div style="margin-top:6px;color:#666">$${p.price.toFixed(2)} each</div>
-                            <div style="margin-top:8px">Qty: <input class="qty" type="number" min="1" value="${it.quantity}" onchange="updateQty(${p.id},this.value)"></div>
-                        </div>
-                        <div style="width:120px;text-align:right">$${line.toFixed(2)}<br><button style="margin-top:8px" onclick="removeItem(${p.id})">Remove</button></div>
-                    </div>
-                `;
-            });
-            area.innerHTML = html;
-            const shipping = 5.00;
-            document.getElementById('subtotal').textContent = '$'+subtotal.toFixed(2);
-            document.getElementById('grand').textContent = '$'+(subtotal+shipping).toFixed(2);
-            updateCartCount();
-        }
+  <script src="assets/products.js"></script>
+  <script src="assets/scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      renderCartPage();
+      updateCartCount();
 
-        function updateQty(id,q){const cart=getCart();const it=cart.find(x=>x.id===id);if(!it) return;it.quantity=Math.max(1,parseInt(q)||1);setCart(cart)}
-        function removeItem(id){let cart=getCart();cart=cart.filter(x=>x.id!==id);setCart(cart)}
-
-        function checkout(){
-            const cart=getCart();if(cart.length===0){alert('Cart is empty');return}
-            const name=document.getElementById('cname').value.trim();const addr=document.getElementById('caddr').value.trim();const card=document.getElementById('ccard').value.trim();
-            if(!name||!addr||!card){alert('Please fill name, address and payment (mock)');return}
-            // Simulate order processing
-            const order = {id:'ORD-'+Date.now(),name,addr,items:cart,created:new Date().toISOString()};
-            localStorage.removeItem('cart');
-            alert('Thank you! Your order '+order.id+' has been placed (demo).');
-            renderCart();
-            // optional: redirect to thank you or orders page
-            location.href='shop.html';
-        }
-
-        function updateCartCount(){const count=getCart().reduce((s,it)=>s+it.quantity,0);const el=document.getElementById('cartCount');if(el)el.textContent=count}
-
-        renderCart();
-    </script>
+      document.getElementById('checkout-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const cart = getCart();
+        if(!cart || cart.length === 0) return alert('Your cart is empty');
+        // Simple demo checkout: create order summary and clear cart
+        const fullname = document.getElementById('fullname').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const card = document.getElementById('card').value.trim();
+        if(!fullname || !address || !card) return alert('Please fill all fields');
+        const total = cart.reduce((s,item)=> s + item.qty * Number(item.price),0).toFixed(2);
+        const order = {
+          id: 'ORD-' + Date.now(),
+          name: fullname,
+          address,
+          total,
+          items: cart,
+          placedAt: new Date().toISOString()
+        };
+        // In real app you'd send to server. Here we show confirmation and clear cart.
+        localStorage.removeItem('evo_cart');
+        renderCartPage();
+        updateCartCount();
+        document.getElementById('order-result').innerHTML = `<div class="order-confirm">Order placed!<br>Order ID: ${order.id}<br>Total: $${order.total}</div>`;
+      });
+    });
+  </script>
 </body>
 </html>
