@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign in - Evolution</title>
+  <style>
+    body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:#f4f6f8;color:#222;}
+    .card{max-width:480px;margin:60px auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+    .tabs{display:flex;gap:8px;margin-bottom:16px}
+    .tab{flex:1;padding:10px;border-radius:8px;text-align:center;cursor:pointer;background:#eef2f6}
+    .tab.active{background:#667eea;color:#fff}
+    form{display:none}
+    form.active{display:block}
+    label{display:block;margin:8px 0 4px}
+    input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .btn{margin-top:12px;padding:10px 14px;border:none;background:#667eea;color:#fff;border-radius:8px;cursor:pointer;width:100%;font-weight:700}
+    .meta{margin-top:12px;font-size:14px;color:#666;text-align:center}
+    .error{color:#b00020;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="tabs">
+      <div id="tab-create" class="tab active">Create an account</div>
+      <div id="tab-signin" class="tab">Sign into an account</div>
+    </div>
+
+    <form id="form-create" class="active">
+      <label>First name</label>
+      <input id="create-first" required>
+      <label>Last name</label>
+      <input id="create-last" required>
+      <label>Password</label>
+      <input id="create-pass" type="password" required>
+      <label>Confirm password</label>
+      <input id="create-pass2" type="password" required>
+      <div class="error" id="create-error"></div>
+      <button type="button" class="btn" id="create-btn">Create account</button>
+      <div class="meta">By creating an account you agree to this demo flow.</div>
+    </form>
+
+    <form id="form-signin">
+      <label>First name</label>
+      <input id="signin-first" required>
+      <label>Last name</label>
+      <input id="signin-last" required>
+      <label>Password</label>
+      <input id="signin-pass" type="password" required>
+      <div class="error" id="signin-error"></div>
+      <button type="button" class="btn" id="signin-btn">Sign in</button>
+      <div class="meta">This site will remember you on this device.</div>
+    </form>
+
+  </div>
+
+  <script src="signin.js"></script>
+</body>
+</html>
