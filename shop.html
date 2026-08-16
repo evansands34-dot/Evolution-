@@ -5,515 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - Evolution Premium Shoes & Clothing</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            background-color: #f8f9fa;
-        }
-
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            text-decoration: none;
-            color: white;
-            letter-spacing: -0.5px;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 15px;
-        }
-
-        nav a:hover {
-            opacity: 0.85;
-        }
-
-        .nav-active {
-            border-bottom: 2px solid white;
-            padding-bottom: 5px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .page-header {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            margin-bottom: 50px;
-        }
-
-        .page-header h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .page-header p {
-            font-size: 18px;
-            opacity: 0.95;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 12px 28px;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .filter-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        /* Product Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid #ecf0f1;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            color: #667eea;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #f39c12;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .product-info {
-            padding: 25px;
-        }
-
-        .product-category {
-            color: #667eea;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .product-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .product-description {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .product-price {
-            font-size: 28px;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-
-        .product-price-old {
-            font-size: 16px;
-            color: #bdc3c7;
-            text-decoration: line-through;
-            margin-right: 10px;
-        }
-
-        .product-rating {
-            color: #f39c12;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
-        }
-
-        .add-to-cart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .add-to-cart-btn:active {
-            transform: translateY(0);
-        }
-
-        .out-of-stock-btn {
-            background: #bdc3c7;
-            cursor: not-allowed;
-        }
-
-        /* Footer */
-        footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-        }
-
-        footer p {
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 0.3px;
-        }
-
-        .coming-soon-banner {
-            background: linear-gradient(135deg, #fff9e6 0%, #fff3d0 100%);
-            border-left: 5px solid #f39c12;
-            padding: 25px;
-            margin-bottom: 40px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.1);
-        }
-
-        .coming-soon-banner p {
-            color: #d68910;
-            font-weight: 600;
-            font-size: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 32px;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .filter-section {
-                gap: 10px;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 20px;
-            }
-
-            .product-image {
-                height: 200px;
-                font-size: 60px;
-            }
-        }
+        /* Keep original styles but shorten for brevity */
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Segoe UI',Tahoma,Geneva, Verdana, sans-serif;background:#f8f9fa;color:#2c3e50}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:18px 0}
+        nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
+        .logo{font-weight:700;color:#fff;text-decoration:none}
+        .container{max-width:1200px;margin:20px auto;padding:0 20px}
+        .page-header{text-align:center;padding:40px 20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border-radius:8px}
+        .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:30px;margin-top:30px}
+        .product-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.08);border:1px solid #ecf0f1}
+        .product-image{height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+        .product-image img{width:100%;height:100%;object-fit:cover}
+        .product-info{padding:18px}
+        .product-name{font-size:18px;font-weight:700;margin:8px 0;color:#2c3e50}
+        .product-price{font-size:20px;font-weight:700;color:#667eea}
+        .add-to-cart-btn{padding:12px;border-radius:8px;border:none;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;cursor:pointer;width:100%;font-weight:600}
+        .filter-section{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+        .filter-btn{padding:10px 18px;border-radius:20px;border:2px solid #667eea;background:#fff;color:#667eea;cursor:pointer}
+        .filter-btn.active{background:#667eea;color:#fff}
+        @media(max-width:600px){.products-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
+        .cart-link{background:#fff;padding:8px 12px;border-radius:20px}
     </style>
 </head>
 <body>
     <header>
         <nav>
             <a href="home.html" class="logo">🔥 Evolution</a>
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="shop.html" class="nav-active">Shop</a></li>
-                <li><a href="index.html">Gallery</a></li>
-                <li><a href="home.html#contact">Contact</a></li>
-            </ul>
+            <div>
+                <a class="cart-link" href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+            </div>
         </nav>
     </header>
 
     <section class="page-header">
         <h1>🛍️ Evolution Shop</h1>
-        <p>Premium Shoes & Clothing - Curated for Your Style</p>
+        <p>Premium Shoes & Clothing - Click a product to view details and reviews</p>
     </section>
 
     <div class="container">
-        <div class="coming-soon-banner">
-            <p>📦 Currently Out of Stock</p>
-            <p>Items below showcase our upcoming collection with suggested retail prices. Check back soon!</p>
-        </div>
-
-        <!-- Filter Section -->
         <div class="filter-section">
-            <button class="filter-btn active" onclick="filterProducts('all')">All Items</button>
-            <button class="filter-btn" onclick="filterProducts('footwear')">👟 Footwear</button>
-            <button class="filter-btn" onclick="filterProducts('apparel')">👕 Apparel</button>
+            <button class="filter-btn active" data-filter="all">All Items</button>
+            <button class="filter-btn" data-filter="footwear">👟 Footwear</button>
+            <button class="filter-btn" data-filter="apparel">👕 Apparel</button>
         </div>
 
-        <!-- Products Grid -->
-        <div class="products-grid" id="productsGrid">
-            <!-- Products will be generated by JavaScript -->
-        </div>
+        <div class="products-grid" id="productsGrid"></div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Evolution - Premium Shoes & Clothing. All rights reserved.</p>
-        <p style="margin-top: 12px; opacity: 0.85;">Currently out of stock • Coming soon with amazing products</p>
-    </footer>
-
+    <script src="products.js"></script>
     <script>
-        // Product Database
-        const products = [
-            // Footwear
-            {
-                id: 1,
-                category: 'footwear',
-                name: 'Evolution Pro Running Shoes',
-                description: 'Advanced cushioning with premium comfort',
-                price: 129.99,
-                originalPrice: 149.99,
-                rating: '⭐⭐⭐⭐⭐ (243)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_29_44 PM.png',
-                badge: 'New'
-            },
-            {
-                id: 2,
-                category: 'footwear',
-                name: 'Evolution Classic Sneakers',
-                description: 'Timeless design meets modern comfort',
-                price: 99.99,
-                originalPrice: 119.99,
-                rating: '⭐⭐⭐⭐⭐ (187)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_30_31 PM.png',
-                badge: 'Popular'
-            },
-            {
-                id: 3,
-                category: 'footwear',
-                name: 'Evolution Urban Boots',
-                description: 'Stylish leather boots for every season',
-                price: 159.99,
-                originalPrice: 189.99,
-                rating: '⭐⭐⭐⭐⭐ (156)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_30_08 PM.png',
-                badge: 'Sale'
-            },
-            {
-                id: 4,
-                category: 'footwear',
-                name: 'Evolution Lightweight Trainers',
-                description: 'Perfect for gym and everyday wear',
-                price: 89.99,
-                originalPrice: 109.99,
-                rating: '⭐⭐⭐⭐ (89)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_29_10 PM.png',
-                badge: 'Trending'
-            },
-            // Apparel
-            {
-                id: 5,
-                category: 'apparel',
-                name: 'Evolution Premium T-Shirt',
-                description: 'Soft cotton blend, perfect fit',
-                price: 39.99,
-                originalPrice: 49.99,
-                rating: '⭐⭐⭐⭐⭐ (412)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_29_10 PM.png',
-                badge: 'Best Seller'
-            },
-            {
-                id: 6,
-                category: 'apparel',
-                name: 'Evolution Hoodie Jacket',
-                description: 'Comfortable and warm for all seasons',
-                price: 79.99,
-                originalPrice: 99.99,
-                rating: '⭐⭐⭐⭐⭐ (358)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_30_08 PM.png',
-                badge: 'New'
-            },
-            {
-                id: 7,
-                category: 'apparel',
-                name: 'Evolution Joggers',
-                description: 'Premium athletic wear for comfort',
-                price: 69.99,
-                originalPrice: 89.99,
-                rating: '⭐⭐⭐⭐⭐ (267)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_29_44 PM.png',
-                badge: 'Popular'
-            },
-            {
-                id: 8,
-                category: 'apparel',
-                name: 'Evolution Performance Shorts',
-                description: 'Breathable fabric for active wear',
-                price: 49.99,
-                originalPrice: 59.99,
-                rating: '⭐⭐⭐⭐ (145)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_30_31 PM.png',
-                badge: 'Sale'
-            },
-            {
-                id: 9,
-                category: 'apparel',
-                name: 'Evolution Crew Neck Sweater',
-                description: 'Cozy knit perfect for layering',
-                price: 59.99,
-                originalPrice: 79.99,
-                rating: '⭐⭐⭐⭐⭐ (203)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_29_10 PM.png',
-                badge: 'Trending'
-            },
-            {
-                id: 10,
-                category: 'footwear',
-                name: 'Evolution Basketball Shoes',
-                description: 'High-performance court shoes',
-                price: 139.99,
-                originalPrice: 169.99,
-                rating: '⭐⭐⭐⭐⭐ (178)',
-                image: 'ChatGPT Image Apr 5, 2026, 05_30_08 PM.png',
-                badge: 'New'
-            }
-        ];
+        // simple cart in localStorage: [{id,quantity}]
+        function getCart(){try{return JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){return []}}
+        function setCart(c){localStorage.setItem('cart',JSON.stringify(c));updateCartCount();}
+        function updateCartCount(){const count=getCart().reduce((s,it)=>s+it.quantity,0);document.getElementById('cartCount').textContent=count}
 
-        let currentFilter = 'all';
+        function addToCart(id){const cart=getCart();const existing=cart.find(i=>i.id===id);if(existing){existing.quantity+=1}else{cart.push({id,quantity:1})}setCart(cart);alert('Added to cart')}
 
-        function renderProducts(filter = 'all') {
-            const productsGrid = document.getElementById('productsGrid');
-            productsGrid.innerHTML = '';
-
-            const filteredProducts = filter === 'all' 
-                ? products 
-                : products.filter(p => p.category === filter);
-
-            filteredProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="product-image">
-                        <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'">
-                        <span class="product-badge">${product.badge}</span>
-                    </div>
+        function renderProducts(filter='all'){
+            const grid=document.getElementById('productsGrid');grid.innerHTML='';
+            const list = filter==='all'?window.products:window.products.filter(p=>p.category===filter);
+            list.forEach(p=>{
+                const card=document.createElement('div');card.className='product-card';
+                card.innerHTML = `
+                    <a href="product.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit">
+                      <div class="product-image"><img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"></div>
+                    </a>
                     <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <h3 class="product-name">${product.name}</h3>
-                        <p class="product-description">${product.description}</p>
-                        <div class="product-rating">${product.rating}</div>
-                        <div class="product-price">
-                            <span class="product-price-old">$${product.originalPrice.toFixed(2)}</span>
-                            $${product.price.toFixed(2)}
-                        </div>
-                        <button class="add-to-cart-btn out-of-stock-btn" disabled>Coming Soon</button>
+                        <a href="product.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit"><div class="product-name">${p.name}</div></a>
+                        <div class="product-price">$${p.price.toFixed(2)}</div>
+                        <div style="margin-top:12px"><button class="add-to-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button></div>
                     </div>
                 `;
-                productsGrid.appendChild(productCard);
-            });
+                grid.appendChild(card);
+            })
         }
 
-        function filterProducts(category) {
-            currentFilter = category;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            renderProducts(category);
-        }
+        document.querySelectorAll('.filter-btn').forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProducts(btn.dataset.filter);
+            })
+        })
 
-        // Initial render
-        renderProducts();
+        // initial
+        renderProducts();updateCartCount();
     </script>
 </body>
 </html>
