@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin - Evolution</title>
+  <style>
+    body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;padding:20px;background:#f4f6f8}
+    .card{max-width:700px;margin:40px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+    label{display:block;margin-top:12px}
+    input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .btn{margin-top:12px;padding:10px 14px;border:none;background:#667eea;color:#fff;border-radius:8px;cursor:pointer}
+    .status{margin-top:12px;font-weight:700}
+    .row{display:flex;gap:8px}
+    .col{flex:1}
+    hr{margin:16px 0}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Admin Console</h2>
+    <p>Use the Admin Console to manage Evo AI. For initial bootstrap you can create an admin user using ADMIN_KEY (server env). After an admin exists, sign in below to manage settings.</p>
+
+    <h3>Bootstrap Admin (one-time)</h3>
+    <label>Server ADMIN_KEY (only for bootstrap)</label>
+    <input id="bootstrapKey" placeholder="Enter server ADMIN_KEY (for initial admin creation)">
+    <div class="row">
+      <input id="bootstrapFirst" class="col" placeholder="First name">
+      <input id="bootstrapLast" class="col" placeholder="Last name">
+    </div>
+    <label>Password</label>
+    <input id="bootstrapPass" type="password" placeholder="Password">
+    <button id="bootstrapBtn" class="btn">Create Admin (bootstrap)</button>
+
+    <hr>
+
+    <h3>Admin Sign In</h3>
+    <div class="row">
+      <input id="adminFirst" class="col" placeholder="First name">
+      <input id="adminLast" class="col" placeholder="Last name">
+    </div>
+    <label>Password</label>
+    <input id="adminPass" type="password" placeholder="Password">
+    <div style="display:flex;gap:8px">
+      <button id="adminLogin" class="btn">Sign in</button>
+      <button id="adminLogout" class="btn" style="background:#999">Sign out</button>
+    </div>
+
+    <hr>
+
+    <h3>Admin Actions</h3>
+    <div style="display:flex;gap:8px">
+      <button id="statusBtn" class="btn" style="background:#444">Get Status</button>
+      <button id="toggleBtn" class="btn">Toggle Evo AI</button>
+    </div>
+    <div class="status" id="statusArea">Status: unknown</div>
+  </div>
+
+<script src="admin.js"></script>
+</body>
+</html>
