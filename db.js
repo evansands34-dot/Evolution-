@@ -1,4 +1,4 @@
-// db.js - simple SQLite helper for users table
+// db.js - simple SQLite helper for users table (updated with isAdmin support)
 const path = require('path');
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
@@ -19,12 +19,18 @@ async function init() {
       createdAt TEXT NOT NULL
     );
   `);
+  // add isAdmin column if missing
+  try{
+    await db.get("SELECT isAdmin FROM users LIMIT 1");
+  }catch(e){
+    try{ await db.exec("ALTER TABLE users ADD COLUMN isAdmin INTEGER DEFAULT 0"); }catch(err){}
+  }
   return db;
 }
 
 async function createUser(db, user) {
-  const { id, firstName, lastName, passwordHash, createdAt } = user;
-  await db.run('INSERT INTO users (id, firstName, lastName, passwordHash, createdAt) VALUES (?, ?, ?, ?, ?)', [id, firstName, lastName, passwordHash, createdAt]);
+  const { id, firstName, lastName, passwordHash, createdAt, isAdmin } = user;
+  await db.run('INSERT INTO users (id, firstName, lastName, passwordHash, createdAt, isAdmin) VALUES (?, ?, ?, ?, ?, ?)', [id, firstName, lastName, passwordHash, createdAt, isAdmin?1:0]);
 }
 
 async function findUserByName(db, firstName, lastName) {
