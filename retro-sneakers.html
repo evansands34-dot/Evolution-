@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Retro Sneakers - Evolution</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1><a href="/">Evolution</a></h1>
+    <nav class="top-nav">
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="index.html" class="nav-link nav-active">Shopping</a>
+      <a href="cart.html" id="cart-link" class="cart-link" aria-label="Cart"></a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <a href="index.html">← Back to products</a>
+
+    <div id="product-detail" class="product-detail"></div>
+
+    <section class="reviews" id="reviews-section">
+      <h3>Reviews</h3>
+      <div id="reviews-list"></div>
+
+      <h4>Add a review</h4>
+      <form id="review-form">
+        <label>
+          Your name<br>
+          <input type="text" id="reviewer-name" required>
+        </label><br>
+        <label>
+          Rating<br>
+          <select id="review-rating">
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+          </select>
+        </label><br>
+        <label>
+          Comment<br>
+          <textarea id="review-comment" rows="3" required></textarea>
+        </label><br>
+        <button type="submit" class="btn">Submit review</button>
+      </form>
+    </section>
+  </main>
+
+  <script>window.PRODUCT_ID = 'p5';</script>
+  <script src="assets/products.js"></script>
+  <script src="assets/scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      loadProductPage();
+      updateCartCount();
+
+      document.getElementById('review-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const id = (getQueryParam('id') || window.PRODUCT_ID);
+        const name = document.getElementById('reviewer-name').value.trim();
+        const rating = parseInt(document.getElementById('review-rating').value,10);
+        const comment = document.getElementById('review-comment').value.trim();
+        if(!name || !comment) return alert('Please add name and comment');
+        addReview(id, {name,rating,comment,created: new Date().toISOString()});
+        document.getElementById('reviewer-name').value = '';
+        document.getElementById('review-comment').value = '';
+        renderReviews(id);
+        document.getElementById('reviews-list').scrollIntoView({behavior:'smooth'});
+      });
+    });
+  </script>
+</body>
+</html>

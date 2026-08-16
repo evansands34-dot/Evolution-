@@ -15,6 +15,7 @@ function getProductById(id){
 // Index page
 function loadIndexProducts(){
   const container = document.getElementById('product-list');
+  if(!container) return;
   container.innerHTML = '';
   PRODUCTS.forEach(p=>{
     const el = document.createElement('div');
@@ -35,11 +36,13 @@ function loadIndexProducts(){
 
 // Product page
 function loadProductPage(){
-  const id = getQueryParam('id');
+  const queryId = getQueryParam('id');
+  const id = queryId || (window.PRODUCT_ID || null);
   const target = document.getElementById('product-detail');
-  if(!id){ target.innerHTML = '<p>Product not found</p>'; return; }
+  if(!id){ if(target) target.innerHTML = '<p>Product not found</p>'; return; }
   const p = getProductById(id);
-  if(!p){ target.innerHTML = '<p>Product not found</p>'; return; }
+  if(!p){ if(target) target.innerHTML = '<p>Product not found</p>'; return; }
+  if(!target) return;
   target.innerHTML = `
     <div class="product-card detail-top">
       <img src="${p.img}" alt="${p.name}">
@@ -55,10 +58,13 @@ function loadProductPage(){
       </div>
     </div>
   `;
-  document.getElementById('add-cart-btn').addEventListener('click', ()=>{
-    const qty = parseInt(document.getElementById('qty-input').value,10) || 1;
-    addToCart(id, qty);
-  });
+  const addBtn = document.getElementById('add-cart-btn');
+  if(addBtn){
+    addBtn.addEventListener('click', ()=>{
+      const qty = parseInt(document.getElementById('qty-input').value,10) || 1;
+      addToCart(id, qty);
+    });
+  }
   renderReviews(id);
 }
 
