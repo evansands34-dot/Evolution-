@@ -6,6 +6,11 @@
     <title>Product - Evolution</title>
     <style>
         body{font-family:'Segoe UI',Tahoma,Arial;background:#f8f9fa;color:#2c3e50;padding:20px}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:14px 0;margin-bottom:18px}
+        nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
+        .logo{font-weight:700;color:#fff;text-decoration:none}
+        nav ul{list-style:none;display:flex;gap:18px;align-items:center}
+        nav a{color:#fff;text-decoration:none;font-weight:500}
         .container{max-width:900px;margin:0 auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
         .top{display:flex;gap:20px;flex-wrap:wrap}
         .img{flex:1 1 320px;height:360px;background:#eee;display:flex;align-items:center;justify-content:center}
@@ -19,11 +24,24 @@
         .review{border-top:1px solid #eee;padding:12px 0}
         label{display:block;margin:8px 0 4px}
         input,textarea,select{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px}
-        .back{margin-bottom:12px;display:inline-block}
     </style>
 </head>
 <body>
-    <a class="back" href="shop.html">← Back to Shop</a>
+    <header>
+        <nav>
+            <a href="home.html" class="logo">🔥 Evolution</a>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="shop.html">Products</a></li>
+                <li><a href="index.html">Gallery</a></li>
+                <li><a href="home.html#contact">Contact</a></li>
+            </ul>
+            <div>
+                <a style="background:#fff;padding:6px 10px;border-radius:18px;color:#333;text-decoration:none" href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+            </div>
+        </nav>
+    </header>
+
     <div class="container" id="app">
         <div id="content">Loading...</div>
     </div>
@@ -73,6 +91,7 @@
                     </div>
                 </div>
             `;
+            updateCartCount();
         }
 
         function escapeHtml(s){return (s||'').toString().replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]})}
@@ -90,7 +109,8 @@
 
         function getCart(){try{return JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){return []}}
         function setCart(c){localStorage.setItem('cart',JSON.stringify(c));}
-        function addToCart(id){const cart=getCart();const it=cart.find(i=>i.id===id);if(it){it.quantity+=1}else{cart.push({id,quantity:1})}setCart(cart);alert('Added to cart');}
+        function addToCart(id){const cart=getCart();const it=cart.find(i=>i.id===id);if(it){it.quantity+=1}else{cart.push({id,quantity:1})}setCart(cart);alert('Added to cart');updateCartCount();}
+        function updateCartCount(){const count=getCart().reduce((s,it)=>s+it.quantity,0);const el=document.getElementById('cartCount');if(el)el.textContent=count}
 
         render();
     </script>

@@ -6,6 +6,11 @@
     <title>Cart / Checkout - Evolution</title>
     <style>
         body{font-family:'Segoe UI',Tahoma,Arial;background:#f8f9fa;color:#2c3e50;padding:20px}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:14px 0;margin-bottom:18px}
+        nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
+        .logo{font-weight:700;color:#fff;text-decoration:none}
+        nav ul{list-style:none;display:flex;gap:18px;align-items:center}
+        nav a{color:#fff;text-decoration:none;font-weight:500}
         .wrap{max-width:1000px;margin:0 auto}
         .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
         .card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
@@ -19,6 +24,21 @@
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="home.html" class="logo">🔥 Evolution</a>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="shop.html">Products</a></li>
+                <li><a href="index.html">Gallery</a></li>
+                <li><a href="home.html#contact">Contact</a></li>
+            </ul>
+            <div>
+                <a style="background:#fff;padding:6px 10px;border-radius:18px;color:#333;text-decoration:none" href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+            </div>
+        </nav>
+    </header>
+
     <div class="wrap">
         <h1>🛒 Your Cart</h1>
         <div class="grid">
@@ -56,12 +76,12 @@
     <script src="products.js"></script>
     <script>
         function getCart(){try{return JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){return []}}
-        function setCart(c){localStorage.setItem('cart',JSON.stringify(c));renderCart();}
+        function setCart(c){localStorage.setItem('cart',JSON.stringify(c));renderCart();updateCartCount();}
 
         function renderCart(){
             const cart = getCart();
             const area = document.getElementById('cartArea');
-            if(cart.length===0){area.innerHTML='<p>Your cart is empty.</p>';document.getElementById('subtotal').textContent='$0.00';document.getElementById('grand').textContent='$0.00';return}
+            if(cart.length===0){area.innerHTML='<p>Your cart is empty.</p>';document.getElementById('subtotal').textContent='$0.00';document.getElementById('grand').textContent='$0.00';updateCartCount();return}
             let html='';
             let subtotal=0;
             cart.forEach(it=>{
@@ -84,6 +104,7 @@
             const shipping = 5.00;
             document.getElementById('subtotal').textContent = '$'+subtotal.toFixed(2);
             document.getElementById('grand').textContent = '$'+(subtotal+shipping).toFixed(2);
+            updateCartCount();
         }
 
         function updateQty(id,q){const cart=getCart();const it=cart.find(x=>x.id===id);if(!it) return;it.quantity=Math.max(1,parseInt(q)||1);setCart(cart)}
@@ -101,6 +122,8 @@
             // optional: redirect to thank you or orders page
             location.href='shop.html';
         }
+
+        function updateCartCount(){const count=getCart().reduce((s,it)=>s+it.quantity,0);const el=document.getElementById('cartCount');if(el)el.textContent=count}
 
         renderCart();
     </script>
