@@ -1,7 +1,12 @@
 :root{--bg:#0a0a0a;--accent:#c8102e;--muted:#f6f6f6;--card:#111}
-body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:var(--muted);color:#111}
-.site-header{background:var(--bg);color:#fff;padding:12px}
+/* Make header layout flexible so the back-home button appears on the left */
+.site-header{background:var(--bg);color:#fff;padding:12px;display:flex;align-items:center;gap:18px}
 .site-header a{color:#fff;text-decoration:none}
+.site-header h1{margin:0}
+.back-home{color:#fff;border:1px solid rgba(255,255,255,0.12);padding:6px 10px;border-radius:6px;text-decoration:none;background:transparent}
+.back-home:hover{background:rgba(255,255,255,0.03)}
+
+body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:var(--muted);color:#111}
 .container{max-width:1100px;margin:24px auto;padding:0 16px}
 .top-nav{display:flex;gap:18px;align-items:center}
 .top-nav .nav-link{color:#fff;padding:6px 8px;text-decoration:none}
@@ -33,3 +38,12 @@ body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:0;background:var(--
   .product-detail .detail-top{flex-direction:column}
   .product-detail img{width:100%}
 }
+
+/* Shopping page + checkout background set to true black and adjust text color */
+body.shopping-page{background:#000;color:#fff}
+body.shopping-page .container{color:inherit}
+/* Keep product cards and review cards light so text is readable */
+body.shopping-page .product-card, body.shopping-page #reviews-list .review, body.shopping-page .cart-row{background:#111;color:#fff}
+body.shopping-page .product-card p, body.shopping-page .product-card .product-price{color:#fff}
+body.shopping-page .btn{background:var(--accent)}
+body.shopping-page input, body.shopping-page textarea, body.shopping-page select{background:#222;color:#fff;border:1px solid #333}
