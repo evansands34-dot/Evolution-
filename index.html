@@ -240,37 +240,24 @@
 
     <script>
         // === ALL-TIME VISITOR COUNTER - ALWAYS INCREMENT ===
-        const BIN_URL = "https://api.jsonbin.io/v3/b/69d2e2a236566621a880f38b";
-        const API_KEY = "$2a$10$9AJ7g6bJDa5Tf40aUdHad.w7rr16pMi89Mj52JoygN1v33irInCwC";
+        // Using CountAPI (https://countapi.xyz) which works for static sites and increments on each call.
+        // No API key required. Each page load will increment the counter by 1.
+        // Namespace and key chosen: 'evansands34dot' / 'evolution'
+
+        const COUNTAPI_URL = 'https://api.countapi.xyz/hit/evansands34dot/evolution';
 
         async function updateVisitorCounter() {
             try {
-                // 1. Get current visitor count
-                const res = await fetch(BIN_URL, {
-                    headers: { "X-Master-Key": API_KEY }
-                });
+                const res = await fetch(COUNTAPI_URL);
+                if (!res.ok) throw new Error('CountAPI error: ' + res.status);
                 const data = await res.json();
-                let count = data.record.visitorCount || 0;
 
-                // 2. INCREMENT immediately
-                count++;
-
-                // 3. Update JSONBin with new count
-                await fetch(BIN_URL, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": API_KEY
-                    },
-                    body: JSON.stringify({ visitorCount: count })
-                });
-
-                // 4. Display the NEW incremented count
-                document.getElementById('visitors').textContent = count;
-                console.log("Visitor count:", count);
+                // data.value contains the incremented count
+                document.getElementById('visitors').textContent = data.value;
+                console.log('Visitor count:', data.value);
             } catch (err) {
-                console.error("Error updating counter:", err);
-                document.getElementById('visitors').textContent = "Error";
+                console.error('Error updating counter:', err);
+                document.getElementById('visitors').textContent = 'Error';
             }
         }
 
