@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin - Evolution</title>
+  <style>
+    body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;padding:20px;background:#f4f6f8}
+    .card{max-width:600px;margin:40px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+    label{display:block;margin-top:12px}
+    input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+    .btn{margin-top:12px;padding:10px 14px;border:none;background:#667eea;color:#fff;border-radius:8px;cursor:pointer}
+    .status{margin-top:12px;font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Admin Console</h2>
+    <p>This admin console allows toggling Evo AI (OpenAI) usage. You must provide the ADMIN_KEY to perform actions. Do NOT share your ADMIN_KEY.</p>
+    <label>Admin Key</label>
+    <input id="adminkey" placeholder="Enter ADMIN_KEY">
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="statusBtn" class="btn" style="background:#444">Get Status</button>
+      <button id="toggleBtn" class="btn">Toggle Evo AI</button>
+    </div>
+    <div class="status" id="statusArea">Status: unknown</div>
+  </div>
+
+<script src="admin.js"></script>
+</body>
+</html>

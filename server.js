@@ -22,6 +22,8 @@ const SQLITE_FALLBACK_USERS = path.join(__dirname,'users.json');
 const JWT_SECRET = process.env.JWT_SECRET || 'change_this_secret_in_production';
 const OPENAI_KEY = process.env.OPENAI_API_KEY || null;
 const REDIS_URL = process.env.REDIS_URL || null;
+const ADMIN_KEY = process.env.ADMIN_KEY || null;
+const ADMIN_CONFIG_FILE = path.join(__dirname,'admin.json');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -54,16 +56,16 @@ app.use('/api/', apiLimiter);
 
 // in-memory cache as fallback if Redis not configured
 const localCache = new Map();
-function cacheSet(key, value, ttlMs=EVO_CACHE_TTL){
+async function cacheSet(key, value, ttlMs=EVO_CACHE_TTL){
   if(redisClient){
-    return redisClient.set(key, JSON.stringify({v:value}), 'PX', ttlMs).catch(()=>{});
+    try{return await redisClient.set(key, JSON.stringify({v:value}), 'PX', ttlMs);}catch(e){/* ignore */}
   }
   const expires = Date.now() + ttlMs;
   localCache.set(key, { value, expires });
 }
-function cacheGet(key){
+async function cacheGet(key){
   if(redisClient){
-    return redisClient.get(key).then(res=>{ if(!res) return null; try{const parsed=JSON.parse(res); return parsed.v;}catch(e){return null}}).catch(()=>null);
+    try{const res = await redisClient.get(key); if(!res) return null; const parsed=JSON.parse(res); return parsed.v;}catch(e){return null}
   }
   const r = localCache.get(key);
   if(!r) return null;
@@ -71,7 +73,14 @@ function cacheGet(key){
   return r.value;
 }
 
-// Initialize DB and optional Redis
+// admin config (toggle for OpenAI usage)
+let adminConfig = { openaiEnabled: true };
+async function loadAdminConfig(){
+  try{ if(await fs.pathExists(ADMIN_CONFIG_FILE)){ adminConfig = await fs.readJson(ADMIN_CONFIG_FILE); } else { await fs.writeJson(ADMIN_CONFIG_FILE, adminConfig, {spaces:2}); } }catch(e){ console.warn('Could not load admin config', e); }
+}
+async function saveAdminConfig(){ try{ await fs.writeJson(ADMIN_CONFIG_FILE, adminConfig, {spaces:2}); }catch(e){console.warn('Could not save admin config', e);} }
+
+// Initialize DB and optional Redis and admin config
 (async ()=>{
   try{
     dbInstance = await initDb();
@@ -91,6 +100,8 @@ function cacheGet(key){
       redisClient = null;
     }
   }
+
+  await loadAdminConfig();
 })();
 
 // helpers for users (DB first, fallback to file)
@@ -118,7 +129,7 @@ async function getUserFromToken(token){try{const decoded = jwt.verify(token,JWT_
 
 // health endpoint
 app.get('/health', (req, res)=>{
-  res.json({status:'ok', uptime: process.uptime(), openai: !!OPENAI_KEY, redis: !!redisClient});
+  res.json({status:'ok', uptime: process.uptime(), openai_key_present: !!OPENAI_KEY, admin_openai_enabled: !!adminConfig.openaiEnabled, redis: !!redisClient});
 });
 
 app.post('/api/register',async(req,res)=>{
@@ -154,6 +165,21 @@ app.get('/api/me',async(req,res)=>{
   res.json({id:user.id,firstName:user.firstName,lastName:user.lastName});
 });
 
+// Admin endpoints: status and toggle (protected by ADMIN_KEY env var)
+app.get('/api/admin/status', async (req, res) => {
+  res.json({ openai_key_present: !!OPENAI_KEY, admin_enabled: !!adminConfig.openaiEnabled, effective_openai: !!(OPENAI_KEY && adminConfig.openaiEnabled) });
+});
+
+app.post('/api/admin/toggle', async (req, res) => {
+  try{
+    const provided = req.headers['x-admin-key'];
+    if(!ADMIN_KEY || !provided || provided !== ADMIN_KEY) return res.status(403).json({error:'Forbidden'});
+    adminConfig.openaiEnabled = !adminConfig.openaiEnabled;
+    await saveAdminConfig();
+    return res.json({ admin_enabled: adminConfig.openaiEnabled, effective_openai: !!(OPENAI_KEY && adminConfig.openaiEnabled) });
+  }catch(e){console.error('admin toggle error',e);return res.status(500).json({error:'Internal error'})}
+});
+
 // Evo AI endpoint
 app.post('/api/evoai', async (req, res) => {
   try {
@@ -181,7 +207,9 @@ app.post('/api/evoai', async (req, res) => {
 
     const context = productId ? products.find(p=>p.id===Number(productId)) : null;
 
-    if(OPENAI_KEY){
+    const effectiveOpenAI = !!(OPENAI_KEY && adminConfig.openaiEnabled);
+
+    if(effectiveOpenAI){
       const messages = [];
       messages.push({role:'system',content:'You are Evo AI, a helpful shopping assistant for the Evolution store. Keep answers concise, include product suggestions where relevant, and when a product context is provided, use the product details to answer.'});
       if(context){
