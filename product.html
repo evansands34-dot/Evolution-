@@ -47,6 +47,7 @@
     </div>
 
     <script src="products.js"></script>
+    <script src="js/evo-ai.js"></script>
     <script>
         function qs(k){
             const params=new URLSearchParams(location.search);return params.get(k);
@@ -54,65 +55,53 @@
         const pid = parseInt(qs('id'))||null;
         const product = window.products.find(p=>p.id===pid);
         const content = document.getElementById('content');
-        if(!product){content.innerHTML='<p>Product not found</p>';throw new Error('not found')}
 
-        function getReviews(){try{return JSON.parse(localStorage.getItem('reviews_'+product.id)||'[]')}catch(e){return []}}
-        function setReviews(r){localStorage.setItem('reviews_'+product.id,JSON.stringify(r));}
-
-        function render(){
-            const reviews = getReviews();
+        if(!product){
+            content.innerHTML = '<p>Product not found.</p>';
+        } else {
             content.innerHTML = `
                 <div class="top">
-                    <div class="img"><img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'"></div>
+                    <div class="img"><img src="${product.image}" alt="${product.name}"></div>
                     <div class="details">
-                        <h2>${product.name}</h2>
-                        <div class="price">$${product.price.toFixed(2)} <span style="text-decoration:line-through;color:#bdc3c7;font-size:14px;margin-left:8px">$${product.originalPrice.toFixed(2)}</span></div>
+                        <h1>${product.name}</h1>
+                        <div class="price">$${product.price.toFixed(2)}</div>
                         <div class="desc">${product.description}</div>
-                        <div style="margin-top:12px"><button class="btn addcart" onclick="addToCart(${product.id})">Add to cart</button></div>
-                        <div style="margin-top:8px;color:#f39c12">${product.rating}</div>
+                        <div style="margin-top:12px">
+                            <button id="addCartBtn" class="btn addcart">Add to cart</button>
+                            <button id="askEvo" class="btn" style="margin-left:8px">Ask Evo AI</button>
+                        </div>
                     </div>
                 </div>
-
                 <div class="reviews">
-                    <h3>Reviews (${reviews.length})</h3>
-                    <div id="reviewsList">
-                        ${reviews.map(r=>`<div class="review"><strong>${escapeHtml(r.name)}</strong> <span style="color:#f39c12">${'★'.repeat(r.rating)}</span><div style="color:#555;margin-top:6px">${escapeHtml(r.comment)}</div><div style="font-size:12px;color:#999;margin-top:6px">${new Date(r.date).toLocaleString()}</div></div>`).join('')}
-                    </div>
-
-                    <h4 style="margin-top:12px">Add a review</h4>
-                    <div>
-                        <label for="rname">Name</label>
-                        <input id="rname" placeholder="Your name">
-                        <label for="rrating">Rating</label>
-                        <select id="rrating"><option value="5">5 - Excellent</option><option value="4">4 - Good</option><option value="3">3 - Okay</option><option value="2">2 - Poor</option><option value="1">1 - Terrible</option></select>
-                        <label for="rcomment">Comment</label>
-                        <textarea id="rcomment" rows="4" placeholder="Write your review"></textarea>
-                        <div style="margin-top:8px"><button class="btn" onclick="submitReview()">Submit Review</button></div>
-                    </div>
+                    <h3>Reviews</h3>
+                    <div id="reviewsArea">No reviews yet.</div>
                 </div>
             `;
-            updateCartCount();
+
+            // init Evo AI context
+            if(window.setEvoProduct) window.setEvoProduct(product);
+
+            document.getElementById('askEvo').addEventListener('click', ()=>{
+                if(window.openEvoAI) window.openEvoAI();
+                // Prefill the AI input with a helpful prompt
+                setTimeout(()=>{
+                    const input = document.getElementById('evoAiInput');
+                    if(input) input.value = `Tell me about ${product.name} — ${product.description}`;
+                }, 200);
+            });
+
+            document.getElementById('addCartBtn').addEventListener('click', ()=>{
+                // Simple cart using localStorage
+                const cart = JSON.parse(localStorage.getItem('evoCart')||'[]');
+                cart.push({id: product.id, name: product.name, price: product.price, image: product.image});
+                localStorage.setItem('evoCart', JSON.stringify(cart));
+                alert('Added to cart');
+                const countEl = document.getElementById('cartCount'); if(countEl) countEl.innerText = cart.length;
+            });
         }
 
-        function escapeHtml(s){return (s||'').toString().replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]})}
-
-        function submitReview(){
-            const name = document.getElementById('rname').value.trim()||'Anonymous';
-            const rating = parseInt(document.getElementById('rrating').value)||5;
-            const comment = document.getElementById('rcomment').value.trim();
-            const reviews = getReviews();
-            reviews.unshift({name, rating, comment, date: new Date().toISOString()});
-            setReviews(reviews);
-            document.getElementById('rname').value='';document.getElementById('rcomment').value='';
-            render();
-        }
-
-        function getCart(){try{return JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){return []}}
-        function setCart(c){localStorage.setItem('cart',JSON.stringify(c));}
-        function addToCart(id){const cart=getCart();const it=cart.find(i=>i.id===id);if(it){it.quantity+=1}else{cart.push({id,quantity:1})}setCart(cart);alert('Added to cart');updateCartCount();}
-        function updateCartCount(){const count=getCart().reduce((s,it)=>s+it.quantity,0);const el=document.getElementById('cartCount');if(el)el.textContent=count}
-
-        render();
+        // Update cart count on load
+        (function(){ const cart = JSON.parse(localStorage.getItem('evoCart')||'[]'); const countEl = document.getElementById('cartCount'); if(countEl) countEl.innerText = cart.length; })();
     </script>
 </body>
 </html>
