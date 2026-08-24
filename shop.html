@@ -33,74 +33,49 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="home.html" class="logo">🔥 Evolution</a>
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="shop.html" class="nav-active">Products</a></li>
-                <li><a href="index.html">Gallery</a></li>
-                <li><a href="home.html#contact">Contact</a></li>
-            </ul>
-            <div>
-                <a class="cart-link" href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-            </div>
-        </nav>
+        <!-- header will be replaced by js/header.js -->
     </header>
-
-    <section class="page-header">
-        <h1>🛍️ Evolution Products</h1>
-        <p>Premium Shoes & Clothing - Click a product to view details, reviews, and checkout</p>
-    </section>
-
     <div class="container">
-        <div class="filter-section">
-            <button class="filter-btn active" data-filter="all">All Items</button>
-            <button class="filter-btn" data-filter="footwear">👟 Footwear</button>
-            <button class="filter-btn" data-filter="apparel">👕 Apparel</button>
+        <div class="page-header">
+            <h1>Shop</h1>
+            <p>Explore our latest footwear and apparel</p>
         </div>
-
-        <div class="products-grid" id="productsGrid"></div>
+        <div class="filter-section">
+            <button class="filter-btn" data-cat="all">All</button>
+            <button class="filter-btn" data-cat="footwear">Footwear</button>
+            <button class="filter-btn" data-cat="apparel">Apparel</button>
+        </div>
+        <div class="products-grid" id="productsGrid">Loading products...</div>
     </div>
 
     <script src="products.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/auth.js"></script>
     <script>
-        // simple cart in localStorage: [{id,quantity}]
-        function getCart(){try{return JSON.parse(localStorage.getItem('cart')||'[]')}catch(e){return []}}
-        function setCart(c){localStorage.setItem('cart',JSON.stringify(c));updateCartCount();}
-        function updateCartCount(){const count=getCart().reduce((s,it)=>s+it.quantity,0);const el=document.getElementById('cartCount');if(el)el.textContent=count}
-
-        function addToCart(id){const cart=getCart();const existing=cart.find(i=>i.id===id);if(existing){existing.quantity+=1}else{cart.push({id,quantity:1})}setCart(cart);alert('Added to cart')}
-
-        function renderProducts(filter='all'){
-            const grid=document.getElementById('productsGrid');grid.innerHTML='';
-            const list = filter==='all'?window.products:window.products.filter(p=>p.category===filter);
-            list.forEach(p=>{
-                const card=document.createElement('div');card.className='product-card';
+        function renderProducts(filter){
+            const grid = document.getElementById('productsGrid'); grid.innerHTML='';
+            const q = new URLSearchParams(location.search).get('q');
+            const list = window.products || [];
+            let shown = list.filter(p=> filter==='all' || p.category===filter );
+            if(q){ const qq = q.toLowerCase(); shown = shown.filter(p=> (p.name+p.description+p.category).toLowerCase().includes(qq)); }
+            if(shown.length===0) grid.innerHTML = '<p style="padding:20px">No products found.</p>';
+            shown.forEach(p=>{
+                const card = document.createElement('div'); card.className='product-card';
                 card.innerHTML = `
-                    <a href="product.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit">
-                      <div class="product-image"><img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"></div>
-                    </a>
+                    <div class="product-image"><img src="${p.image}" alt="${p.name}"></div>
                     <div class="product-info">
-                        <a href="product.html?id=${encodeURIComponent(p.id)}" style="text-decoration:none;color:inherit"><div class="product-name">${p.name}</div></a>
+                        <div class="product-name">${p.name}</div>
                         <div class="product-price">$${p.price.toFixed(2)}</div>
-                        <div class="product-rating">${p.rating}</div>
-                        <div style="margin-top:12px"><button class="add-to-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button></div>
+                        <div style="margin-top:10px"><a href="product.html?id=${p.id}">View</a></div>
                     </div>
                 `;
                 grid.appendChild(card);
-            })
+            });
         }
-
-        document.querySelectorAll('.filter-btn').forEach(btn=>{
-            btn.addEventListener('click',()=>{
-                document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-                btn.classList.add('active');
-                renderProducts(btn.dataset.filter);
-            })
-        })
-
-        // initial
-        renderProducts();updateCartCount();
+        document.addEventListener('DOMContentLoaded', ()=>{
+            renderProducts('all');
+            document.querySelectorAll('.filter-btn').forEach(b=>b.addEventListener('click', ()=>{ renderProducts(b.dataset.cat); }));
+        });
     </script>
 </body>
 </html>
