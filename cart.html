@@ -1,58 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Cart / Checkout - Evolution</title>
-    <style>
-        body{font-family:'Segoe UI',Tahoma,Arial;background:#f8f9fa;color:#2c3e50;padding:20px}
-        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:14px 0;margin-bottom:18px}
-        nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
-        .logo{font-weight:700;color:#fff;text-decoration:none}
-        nav ul{list-style:none;display:flex;gap:18px;align-items:center}
-        nav a{color:#fff;text-decoration:none;font-weight:500}
-        .wrap{max-width:1000px;margin:0 auto}
-        .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
-        .card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
-        .item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
-        .item img{width:88px;height:88px;object-fit:cover}
-        .qty{width:64px}
-        .total{font-weight:700;font-size:20px;color:#222}
-        .checkout-btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:12px;border:none;border-radius:8px;cursor:pointer;width:100%}
-        a{color:#667eea}
-        @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    </style>
-</head>
-<body>
-    <header>
-        <!-- header will be replaced by js/header.js -->
-    </header>
-
-    <div class="wrap">
-        <h1>🛒 Your Cart</h1>
-        <div class="grid">
-            <div>
-                <div class="card" id="cartArea">Loading cart...</div>
-            </div>
-            <div>
-                <div class="card">
-                    <h3>Checkout</h3>
-                    <div style="margin:8px 0">
-                        <label>Name</label>
-                        <input id="cname" placeholder="Full name" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px">
-                    </div>
-                    <div style="margin:8px 0">
-                        <label>Address</label>
-                        <input id="caddr" placeholder="Shipping address" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px">
-                    </div>
-                    <div style="margin-top:12px"><button id="checkoutBtn" class="checkout-btn">Checkout</button></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="js/header.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/supabase.js"></script>
     <script>
         function renderCart(){
             const area = document.getElementById('cartArea');
@@ -75,7 +23,24 @@
             });
             document.querySelectorAll('.removeBtn').forEach(b=>b.addEventListener('click', (e)=>{ const i=parseInt(e.target.dataset.idx); const c=JSON.parse(localStorage.getItem('evoCart')||'[]'); c.splice(i,1); localStorage.setItem('evoCart', JSON.stringify(c)); renderCart(); }));
         }
-        document.addEventListener('DOMContentLoaded', ()=>{ renderCart(); document.getElementById('checkoutBtn').addEventListener('click', ()=>{ alert('Checkout (demo) complete'); localStorage.removeItem('evoCart'); renderCart(); }); });
+        document.addEventListener('DOMContentLoaded', ()=>{ renderCart(); document.getElementById('checkoutBtn').addEventListener('click', async ()=>{ 
+            const name = document.getElementById('cname').value.trim();
+            const addr = document.getElementById('caddr').value.trim();
+            const cart = JSON.parse(localStorage.getItem('evoCart')||'[]');
+            if(cart.length===0){ alert('Cart is empty'); return; }
+            const total = cart.reduce((s,i)=>s+(i.price||0),0);
+            const session = window.evoAuth && window.evoAuth.getSession ? window.evoAuth.getSession() : null;
+            const purchase = { user: session, items: cart, total, address: addr || null };
+            try{
+                if(window.evoSupabase){
+                    await window.evoSupabase.submitPurchase(purchase);
+                    alert('Purchase submitted');
+                    localStorage.removeItem('evoCart'); renderCart();
+                } else {
+                    const key = 'evoPurchasesLocal'; const arr = JSON.parse(localStorage.getItem(key)||'[]'); arr.unshift(Object.assign({ id: Date.now(), created_at: new Date().toISOString() }, purchase)); localStorage.setItem(key, JSON.stringify(arr)); alert('Purchase saved locally (demo)'); localStorage.removeItem('evoCart'); renderCart();
+                }
+            }catch(err){ alert('Checkout failed'); console.error(err); }
+         }); });
     </script>
 </body>
 </html>
