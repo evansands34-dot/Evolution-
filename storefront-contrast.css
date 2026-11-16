@@ -1,16 +1,38 @@
-/* Dark image surfaces and readable cart text across the storefront. */
+/* High-contrast storefront surfaces. Keep product-image containers truly black and cart controls/text white. */
+.product-card,
+.evo-card,
 .product-card > a,
 .evo-card > a,
 .product-card img.photo,
 .evo-card img,
 .detail-image,
 .cart-item img {
+  background: #000 !important;
   background-color: #000 !important;
 }
 
+/* Home and shop use card image wrappers; make the surround black even when an image has transparent pixels. */
+body[data-page="home"] .evo-card > a,
+body[data-page="shop"] .product-card > a,
+body[data-page="home"] .evo-card img,
+body[data-page="shop"] .product-card img.photo {
+  background: #000 !important;
+}
+
+/* The cart icon/link is in the site header, so keep it white on every page. */
+.cart-link,
+.cart-link:visited,
+.cart-link:hover,
+.cart-link:focus,
+.cart-link *,
+#cartCount {
+  color: #fff !important;
+}
+
+/* Cart-page content and controls should never inherit the old purple link color. */
 body[data-page="cart"] {
-  color: #f5f5f5;
-  background: #0c0c0d;
+  color: #fff !important;
+  background: #0c0c0d !important;
 }
 body[data-page="cart"] .main,
 body[data-page="cart"] .main h1,
@@ -21,14 +43,10 @@ body[data-page="cart"] .main label,
 body[data-page="cart"] .main p,
 body[data-page="cart"] .main span,
 body[data-page="cart"] .main a,
+body[data-page="cart"] .main small,
 body[data-page="cart"] .main .muted,
-body[data-page="cart"] .main .summary-row {
-  color: #f5f5f5;
+body[data-page="cart"] .main .summary-row,
+body[data-page="cart"] .main button {
+  color: #fff !important;
 }
-body[data-page="cart"] .main .muted,
-body[data-page="cart"] .main .notice {
-  color: #bdbdc2;
-}
-body[data-page="cart"] .main .text-button {
-  color: #fff;
-}
+body[data-page="cart"] .main .notice { color: #ddd !important; }
