@@ -84,22 +84,30 @@
       .top-nav-ai p { display: none; }
       .top-nav-ai button { white-space: nowrap; }
 
-      /* Keep shop product cards and images aligned like the home grid. */
-      .products-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.9rem;
+      /* Keep both home and shop catalogs in a clean, evenly spaced 3-column grid. */
+      .main .evo-product-grid,
+      .main .products-grid {
+        display: grid !important;
+        width: 100% !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: clamp(0.5rem, 1.8vw, 1rem) !important;
+        align-items: start;
       }
-      .products-grid .product-card {
-        min-width: 0;
+      .main .evo-product-grid > .evo-card,
+      .main .products-grid > .product-card {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        margin: 0 !important;
         overflow: hidden;
       }
-      .products-grid .product-card .photo {
-        display: block;
-        width: 100%;
-        height: 210px;
-        object-fit: cover;
-        object-position: center;
+      .main .evo-product-grid .evo-card img,
+      .main .products-grid .product-card img.photo {
+        display: block !important;
+        width: 100% !important;
+        height: 210px !important;
+        object-fit: cover !important;
+        object-position: center !important;
       }
 
       @media (max-width: 700px) {
