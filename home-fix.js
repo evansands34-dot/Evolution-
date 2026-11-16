@@ -58,37 +58,6 @@
         gap: 1.25rem;
         padding: 1rem 0 0;
       }
-      .evo-home-top {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 0.25rem 0 0.4rem;
-      }
-      .evo-home-top .eyebrow {
-        display: inline-block;
-        margin-bottom: 0.55rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: #f8d46d;
-        font-weight: 800;
-      }
-      .evo-home-top h1 {
-        font-size: clamp(2rem, 3vw, 3.3rem);
-        line-height: 0.96;
-        letter-spacing: -0.06em;
-        margin: 0;
-        font-weight: 800;
-      }
-      .evo-home-actions {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
-      .evo-home-actions .button {
-        white-space: nowrap;
-      }
       .evo-product-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -171,26 +140,9 @@
         padding: 0.7rem 0.75rem;
         font-size: 0.78rem;
       }
-      @media (max-width: 860px) {
-        .evo-home-top {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-      }
     </style>
 
     <section class="evo-home-fix">
-      <div class="evo-home-top">
-        <div>
-          <span class="eyebrow">Fresh drops</span>
-          <h1>Built for every move.</h1>
-        </div>
-        <div class="evo-home-actions">
-          <a class="button" href="shop.html">Shop all</a>
-          <a class="button secondary" href="shop.html?category=footwear">Footwear</a>
-        </div>
-      </div>
-
       <div class="evo-product-grid">
         ${productMarkup}
       </div>
