@@ -1,65 +1,72 @@
-/* Product details: compact image on the left, all product information on the right. */
-body[data-page="product"] .main .product-detail,
-body[data-page="product"] .main .product-details,
-body[data-page="product"] .main .detail-grid,
-body[data-page="product"] .main .product-layout,
-body[data-page="product"] .main .product-view {
-  display: grid !important;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
-  align-items: start;
-  gap: clamp(24px, 5vw, 64px) !important;
-  max-width: 1180px;
-  margin: 24px auto;
-  padding: clamp(18px, 3vw, 36px);
-  color: #fff !important;
+/* Consistent black surfaces across every storefront page, including nested content and image frames. */
+html,
+body,
+body[data-page],
+#app {
+  min-height: 100%;
   background: #000 !important;
 }
-
-body[data-page="product"] .main .product-detail > :first-child,
-body[data-page="product"] .main .product-details > :first-child,
-body[data-page="product"] .main .detail-grid > :first-child,
-body[data-page="product"] .main .product-layout > :first-child,
-body[data-page="product"] .main .product-view > :first-child {
-  min-width: 0;
-}
-
-body[data-page="product"] .main :is(.detail-image, .product-image, .product-photo, img.photo) {
-  display: block;
-  width: 100% !important;
-  max-height: min(62vh, 620px);
-  aspect-ratio: 1 / 1;
-  object-fit: contain !important;
-  object-position: center;
-  padding: clamp(10px, 2vw, 24px);
-  background: #000 !important;
-  border-radius: 16px;
-}
-
-body[data-page="product"] .main :is(.detail-copy, .detail-info, .product-info, .product-copy, .product-description) {
-  min-width: 0;
-  color: #fff !important;
-  background: #000 !important;
-}
-
-body[data-page="product"] .main :is(h1, h2, h3, p, span, strong, label, .muted, .price, .rating) {
+body[data-page] {
   color: #fff;
 }
-body[data-page="product"] .main :is(.panel, .review, .reviews) { color:#fff; background:#000; }
 
-@media (max-width: 700px) {
-  body[data-page="product"] .main .product-detail,
-  body[data-page="product"] .main .product-details,
-  body[data-page="product"] .main .detail-grid,
-  body[data-page="product"] .main .product-layout,
-  body[data-page="product"] .main .product-view {
-    grid-template-columns: minmax(0, 1fr) !important;
-    gap: 18px !important;
-    margin: 12px auto;
-    padding: 14px;
+/* Major page regions and content panels should never fall back to white. */
+body[data-page] :is(header, main, footer, nav, aside, section, article, figure, form, .layout, .main, .panel, .hero, .section, .section-head, .product-detail, .product-details, .detail-grid, .product-layout, .product-view, .product-info, .detail-copy, .detail-info, .product-copy, .product-description, .products-grid, .evo-product-grid, .evo-home-fix, .product-card, .evo-card, .cart-layout, .cart-item, .summary, .empty, .reviews, .review) {
+  background-color: #000 !important;
+}
+
+/* Black canvas behind transparent product photography on home, shop, and detail pages. */
+body[data-page] :is(.product-card > a, .evo-card > a, .product-card img, .product-card img.photo, .evo-card img, .evo-card img.photo, .detail-image, .product-image, .product-photo, .cart-item img) {
+  background: #000 !important;
+  background-color: #000 !important;
+}
+
+/* Keep interactive controls readable while preserving the Evo AI black/white gradient launcher. */
+body[data-page] :is(input, textarea, select) { color:#fff; background-color:#000 !important; }
+.cart-link,
+.cart-link:visited,
+.cart-link:hover,
+.cart-link:focus,
+.cart-link *,
+#cartCount { color:#fff !important; }
+body[data-page="cart"] { color:#fff !important; background:#000 !important; }
+body[data-page="cart"] .main :is(h1,h2,h3,strong,label,p,span,a,small,.muted,.summary-row,button) { color:#fff !important; }
+body[data-page="cart"] .main .notice { color:#ddd !important; }
+
+/* Product details: compact image on the left and details on the right, with a black canvas. */
+body[data-page="product"] .main :is(.product-detail,.product-details,.detail-grid,.product-layout,.product-view) {
+  display:grid !important;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr) !important;
+  align-items:start;
+  gap:clamp(24px,5vw,64px) !important;
+  max-width:1180px;
+  margin:24px auto;
+  padding:clamp(18px,3vw,36px);
+  color:#fff !important;
+  background:#000 !important;
+}
+body[data-page="product"] .main :is(.detail-image,.product-image,.product-photo,img.photo) {
+  display:block;
+  width:100% !important;
+  max-height:min(62vh,620px);
+  aspect-ratio:1/1;
+  object-fit:contain !important;
+  object-position:center;
+  padding:clamp(10px,2vw,24px);
+  background:#000 !important;
+  border-radius:16px;
+}
+body[data-page="product"] .main :is(h1,h2,h3,p,span,strong,label,.muted,.price,.rating) { color:#fff; }
+@media(max-width:700px) {
+  body[data-page="product"] .main :is(.product-detail,.product-details,.detail-grid,.product-layout,.product-view) {
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:18px !important;
+    margin:12px auto;
+    padding:14px;
   }
-  body[data-page="product"] .main :is(.detail-image, .product-image, .product-photo, img.photo) {
-    width: min(100%, 440px) !important;
-    max-height: 52vh;
-    margin: 0 auto;
+  body[data-page="product"] .main :is(.detail-image,.product-image,.product-photo,img.photo) {
+    width:min(100%,440px) !important;
+    max-height:52vh;
+    margin:0 auto;
   }
 }
