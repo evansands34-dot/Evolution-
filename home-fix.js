@@ -55,28 +55,28 @@
       }
       .evo-home-fix {
         display: grid;
-        gap: 1.5rem;
-        padding: 1.1rem 0 0;
+        gap: 1.25rem;
+        padding: 1rem 0 0;
       }
       .evo-home-top {
         display: flex;
         align-items: end;
         justify-content: space-between;
         gap: 1rem;
-        padding: 0.25rem 0 0.5rem;
+        padding: 0.25rem 0 0.4rem;
       }
       .evo-home-top .eyebrow {
         display: inline-block;
-        margin-bottom: 0.6rem;
-        font-size: 0.72rem;
+        margin-bottom: 0.55rem;
+        font-size: 0.7rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: #f8d46d;
         font-weight: 800;
       }
       .evo-home-top h1 {
-        font-size: clamp(2.1rem, 4vw, 4rem);
-        line-height: 0.95;
+        font-size: clamp(2rem, 3vw, 3.3rem);
+        line-height: 0.96;
         letter-spacing: -0.06em;
         margin: 0;
         font-weight: 800;
@@ -92,12 +92,12 @@
       .evo-product-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 0.9rem;
       }
       .evo-card {
         background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 1.25rem;
+        border-radius: 1.1rem;
         overflow: hidden;
         transition: transform 0.18s ease, border-color 0.18s ease;
       }
@@ -111,63 +111,65 @@
       .evo-card img {
         display: block;
         width: 100%;
-        height: 250px;
+        height: 210px;
         object-fit: cover;
         background: #131315;
       }
       .evo-card-body {
-        padding: 1rem 1rem 1.05rem;
+        padding: 0.8rem 0.8rem 0.9rem;
       }
       .evo-card-badge {
         display: inline-flex;
         align-items: center;
-        padding: 0.38rem 0.6rem;
+        padding: 0.3rem 0.55rem;
         border-radius: 999px;
         background: rgba(245, 188, 92, 0.12);
         border: 1px solid rgba(245, 188, 92, 0.32);
         color: #f8d46d;
-        font-size: 0.68rem;
+        font-size: 0.62rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.08em;
       }
       .evo-card h3 {
-        margin: 0.8rem 0 0.3rem;
-        font-size: 1.18rem;
+        margin: 0.7rem 0 0.25rem;
+        font-size: 1rem;
         line-height: 1.2;
         letter-spacing: -0.04em;
       }
       .evo-card p {
         margin: 0;
         color: rgba(255,255,255,0.7);
-        font-size: 0.9rem;
-        min-height: 2.75rem;
+        font-size: 0.8rem;
+        min-height: 2.3rem;
       }
       .evo-card-meta {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
-        gap: 0.75rem;
-        margin-top: 0.9rem;
+        gap: 0.6rem;
+        margin-top: 0.75rem;
       }
       .evo-price {
-        font-size: 1.25rem;
+        font-size: 1.08rem;
         font-weight: 800;
         letter-spacing: -0.05em;
       }
       .evo-rating {
         color: rgba(255,255,255,0.72);
-        font-size: 0.72rem;
+        font-size: 0.7rem;
       }
       .evo-card-actions {
         display: flex;
-        gap: 0.6rem;
-        margin-top: 0.95rem;
+        gap: 0.45rem;
+        margin-top: 0.8rem;
       }
       .evo-card-actions .button,
       .evo-card-actions .button.secondary {
         flex: 1;
         justify-content: center;
+        padding: 0.7rem 0.75rem;
+        font-size: 0.78rem;
       }
       @media (max-width: 860px) {
         .evo-home-top {
