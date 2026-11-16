@@ -1,0 +1,77 @@
+/* Dark, compact demo checkout: thumbnails are intentionally small and no light panels are used. */
+.compact-checkout-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100000 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 16px !important;
+  overflow-y: auto;
+  background: rgba(0,0,0,.82) !important;
+}
+.compact-checkout,
+.compact-checkout * { box-sizing: border-box; }
+.compact-checkout {
+  width: min(540px, 100%);
+  max-height: min(90vh, 760px);
+  overflow: auto;
+  color: #f5f5f5 !important;
+  background: #080808 !important;
+  border: 1px solid #333 !important;
+  border-radius: 18px;
+  box-shadow: 0 24px 80px #000;
+}
+.compact-checkout-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 15px;
+  background: #080808 !important;
+  border-bottom: 1px solid #252525;
+}
+.compact-checkout-eyebrow { margin: 0 0 6px; color: #aaa !important; font-size: .68rem; font-weight: 700; letter-spacing: .13em; }
+.compact-checkout-head h2 { margin: 0; color: #fff !important; font-size: 1.35rem; }
+.compact-checkout-close { width: 36px; height: 36px; color: #fff !important; background: #1c1c1c !important; border: 0; border-radius: 10px; font-size: 1.5rem; cursor: pointer; }
+.compact-checkout-content { padding: 16px 22px 22px; background: #080808 !important; }
+.compact-checkout-items { display: grid; gap: 9px; }
+.compact-checkout-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  padding: 9px;
+  color: #f5f5f5 !important;
+  background: #151515 !important;
+  border-radius: 11px;
+}
+.compact-checkout-item img { display: block; width: 52px !important; height: 52px !important; max-width: 52px !important; object-fit: contain !important; padding: 3px; background: #000 !important; border-radius: 7px; }
+.compact-checkout-item-copy { display: grid; min-width: 0; gap: 4px; }
+.compact-checkout-item-copy strong { overflow: hidden; color: #fff !important; font-size: .88rem; text-overflow: ellipsis; white-space: nowrap; }
+.compact-checkout-item-copy small { color: #aaa !important; font-size: .76rem; }
+.compact-checkout-line-total { color: #fff !important; font-size: .84rem; white-space: nowrap; }
+.compact-checkout-totals { display: grid; gap: 8px; margin: 15px 0; padding: 13px 0; color: #fff !important; background: #080808 !important; border-top: 1px solid #252525; border-bottom: 1px solid #252525; }
+.compact-checkout-totals > div { display: flex; justify-content: space-between; gap: 12px; color: #bbb !important; font-size: .88rem; }
+.compact-checkout-totals strong { color: #fff !important; }
+.compact-checkout-totals .compact-checkout-grand { color: #fff !important; font-size: 1rem; font-weight: 700; }
+.compact-checkout-form { display: grid; gap: 8px; color: #fff !important; background: #080808 !important; }
+.compact-checkout-form label { margin-top: 4px; color: #ddd !important; font-size: .82rem; font-weight: 600; }
+.compact-checkout-form input,
+.compact-checkout-form textarea { width: 100%; min-height: 42px; padding: 10px 12px; color: #fff !important; background: #111 !important; border: 1px solid #383838 !important; border-radius: 9px; font: inherit; resize: vertical; }
+.compact-checkout-form input:focus,
+.compact-checkout-form textarea:focus { outline: 2px solid #666; outline-offset: 1px; }
+.compact-checkout-note { margin: 4px 0; color: #aaa !important; font-size: .76rem; line-height: 1.45; }
+.compact-checkout-submit { width: 100%; min-height: 46px; padding: 12px; color: #fff !important; background: #242424 !important; border: 1px solid #555 !important; border-radius: 10px; font-weight: 700; cursor: pointer; }
+.compact-checkout-submit:hover { background: #333 !important; }
+@media (max-width: 480px) {
+  .compact-checkout-overlay { padding: 10px !important; }
+  .compact-checkout { max-height: 94vh; border-radius: 14px; }
+  .compact-checkout-head { padding: 16px 16px 12px; }
+  .compact-checkout-content { padding: 13px 16px 16px; }
+  .compact-checkout-item { grid-template-columns: 44px minmax(0,1fr) auto; gap: 8px; }
+  .compact-checkout-item img { width:44px !important; height:44px !important; max-width:44px !important; }
+}
