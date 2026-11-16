@@ -1,0 +1,34 @@
+/* Dark image surfaces and readable cart text across the storefront. */
+.product-card > a,
+.evo-card > a,
+.product-card img.photo,
+.evo-card img,
+.detail-image,
+.cart-item img {
+  background-color: #000 !important;
+}
+
+body[data-page="cart"] {
+  color: #f5f5f5;
+  background: #0c0c0d;
+}
+body[data-page="cart"] .main,
+body[data-page="cart"] .main h1,
+body[data-page="cart"] .main h2,
+body[data-page="cart"] .main h3,
+body[data-page="cart"] .main strong,
+body[data-page="cart"] .main label,
+body[data-page="cart"] .main p,
+body[data-page="cart"] .main span,
+body[data-page="cart"] .main a,
+body[data-page="cart"] .main .muted,
+body[data-page="cart"] .main .summary-row {
+  color: #f5f5f5;
+}
+body[data-page="cart"] .main .muted,
+body[data-page="cart"] .main .notice {
+  color: #bdbdc2;
+}
+body[data-page="cart"] .main .text-button {
+  color: #fff;
+}
