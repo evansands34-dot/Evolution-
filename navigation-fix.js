@@ -83,6 +83,25 @@
       .top-nav-ai strong,
       .top-nav-ai p { display: none; }
       .top-nav-ai button { white-space: nowrap; }
+
+      /* Keep shop product cards and images aligned like the home grid. */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+      .products-grid .product-card {
+        min-width: 0;
+        overflow: hidden;
+      }
+      .products-grid .product-card .photo {
+        display: block;
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        object-position: center;
+      }
+
       @media (max-width: 700px) {
         .top-nav { gap: 0.25rem; padding-inline: 0.75rem; }
         .top-nav-label { display: none; }
