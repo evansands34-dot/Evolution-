@@ -1,59 +1,65 @@
-/* Make the entire storefront and every product image surround pure black. */
-html,
-body,
-body[data-page],
-#app,
-.layout,
-.main,
-.evo-home-fix,
-.products-grid,
-.evo-product-grid {
-  background-color: #000 !important;
-}
-
-/* Home and shop product cards: black card, image link, image canvas, and transparent-image backing. */
-.product-card,
-.evo-card,
-.product-card > a,
-.evo-card > a,
-.product-card img,
-.product-card img.photo,
-.evo-card img,
-.evo-card img.photo,
-.detail-image,
-.cart-item img {
+/* Product details: compact image on the left, all product information on the right. */
+body[data-page="product"] .main .product-detail,
+body[data-page="product"] .main .product-details,
+body[data-page="product"] .main .detail-grid,
+body[data-page="product"] .main .product-layout,
+body[data-page="product"] .main .product-view {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+  align-items: start;
+  gap: clamp(24px, 5vw, 64px) !important;
+  max-width: 1180px;
+  margin: 24px auto;
+  padding: clamp(18px, 3vw, 36px);
+  color: #fff !important;
   background: #000 !important;
-  background-color: #000 !important;
 }
 
-/* Ensure the image link itself remains black when legacy or inline rules set a light color. */
-body[data-page="home"] .evo-card > a,
-body[data-page="shop"] .product-card > a,
-body[data-page="home"] .evo-card img,
-body[data-page="shop"] .product-card img {
+body[data-page="product"] .main .product-detail > :first-child,
+body[data-page="product"] .main .product-details > :first-child,
+body[data-page="product"] .main .detail-grid > :first-child,
+body[data-page="product"] .main .product-layout > :first-child,
+body[data-page="product"] .main .product-view > :first-child {
+  min-width: 0;
+}
+
+body[data-page="product"] .main :is(.detail-image, .product-image, .product-photo, img.photo) {
+  display: block;
+  width: 100% !important;
+  max-height: min(62vh, 620px);
+  aspect-ratio: 1 / 1;
+  object-fit: contain !important;
+  object-position: center;
+  padding: clamp(10px, 2vw, 24px);
   background: #000 !important;
-  background-color: #000 !important;
+  border-radius: 16px;
 }
 
-/* Cart icon and all cart-page text stay white. */
-.cart-link,
-.cart-link:visited,
-.cart-link:hover,
-.cart-link:focus,
-.cart-link *,
-#cartCount { color: #fff !important; }
-body[data-page="cart"] { color:#fff !important; background:#000 !important; }
-body[data-page="cart"] .main,
-body[data-page="cart"] .main h1,
-body[data-page="cart"] .main h2,
-body[data-page="cart"] .main h3,
-body[data-page="cart"] .main strong,
-body[data-page="cart"] .main label,
-body[data-page="cart"] .main p,
-body[data-page="cart"] .main span,
-body[data-page="cart"] .main a,
-body[data-page="cart"] .main small,
-body[data-page="cart"] .main .muted,
-body[data-page="cart"] .main .summary-row,
-body[data-page="cart"] .main button { color:#fff !important; }
-body[data-page="cart"] .main .notice { color:#ddd !important; }
+body[data-page="product"] .main :is(.detail-copy, .detail-info, .product-info, .product-copy, .product-description) {
+  min-width: 0;
+  color: #fff !important;
+  background: #000 !important;
+}
+
+body[data-page="product"] .main :is(h1, h2, h3, p, span, strong, label, .muted, .price, .rating) {
+  color: #fff;
+}
+body[data-page="product"] .main :is(.panel, .review, .reviews) { color:#fff; background:#000; }
+
+@media (max-width: 700px) {
+  body[data-page="product"] .main .product-detail,
+  body[data-page="product"] .main .product-details,
+  body[data-page="product"] .main .detail-grid,
+  body[data-page="product"] .main .product-layout,
+  body[data-page="product"] .main .product-view {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    margin: 12px auto;
+    padding: 14px;
+  }
+  body[data-page="product"] .main :is(.detail-image, .product-image, .product-photo, img.photo) {
+    width: min(100%, 440px) !important;
+    max-height: 52vh;
+    margin: 0 auto;
+  }
+}
