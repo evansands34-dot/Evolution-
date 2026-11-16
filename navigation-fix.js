@@ -28,6 +28,7 @@
 
     header.insertAdjacentElement('afterend', nav);
     sidebar.hidden = true;
+    document.querySelector('.layout')?.classList.add('layout-nav-moved');
 
     const style = document.createElement('style');
     style.textContent = `
@@ -84,7 +85,15 @@
       .top-nav-ai p { display: none; }
       .top-nav-ai button { white-space: nowrap; }
 
-      /* Keep both home and shop catalogs in a clean, evenly spaced 3-column grid. */
+      /* The moved navigation leaves the main content spanning the full page width. */
+      .layout.layout-nav-moved {
+        display: block;
+        width: 100%;
+        max-width: none;
+      }
+      .layout-nav-moved > .main { width: 100%; }
+
+      /* Keep product images readable in the three-column catalog. */
       .main .evo-product-grid,
       .main .products-grid {
         display: grid !important;
@@ -105,8 +114,9 @@
       .main .products-grid .product-card img.photo {
         display: block !important;
         width: 100% !important;
-        height: 210px !important;
-        object-fit: cover !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1;
+        object-fit: contain !important;
         object-position: center !important;
       }
 
@@ -141,6 +151,35 @@
       .search-result:hover, .search-result:focus-visible { background: #2a2a2d; outline: none; }
       .search-result small { display: block; margin-top: 3px; color: #aaa; }
       .search-empty { padding: 12px; color: #aaa; font-size: .9rem; }
+
+      /* Account choices stay tucked away until the account button is clicked. */
+      .profile-menu { display: none !important; }
+      .profile-menu.open {
+        display: grid !important;
+        gap: 4px;
+        min-width: 210px;
+        padding: 8px;
+        border: 1px solid #38383b;
+        border-radius: 12px;
+        background: #19191b;
+        box-shadow: 0 12px 32px #0009;
+      }
+      .profile-menu a,
+      .profile-menu button {
+        display: block;
+        width: 100%;
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #f5f5f5;
+        text-align: left;
+        text-decoration: none;
+        font: inherit;
+        cursor: pointer;
+      }
+      .profile-menu a:hover,
+      .profile-menu button:hover { background: #2a2a2d; }
 
       @media (max-width: 700px) {
         .top-nav { gap: 0.25rem; padding-inline: 0.75rem; }
