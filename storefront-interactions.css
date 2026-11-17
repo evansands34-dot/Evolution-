@@ -1,0 +1,34 @@
+/* Dark overlays, compact dialogs, and profile dropdown. Keep all UI surfaces black/dark. */
+.storefront-overlay { position:fixed !important; inset:0 !important; z-index:99990 !important; display:grid !important; place-items:center !important; padding:16px; background:rgba(0,0,0,.82) !important; }
+.storefront-dialog { width:min(520px,100%); max-height:min(82vh,720px); overflow:auto; color:#f5f5f5 !important; background:#080808 !important; border:1px solid #383838; border-radius:16px; box-shadow:0 20px 70px #000; }
+.storefront-dialog-head { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 20px; background:#080808 !important; border-bottom:1px solid #292929; }
+.storefront-dialog-head h2 { margin:0; color:#fff !important; font-size:1.2rem; }
+.storefront-dialog-close { width:36px; height:36px; color:#fff !important; background:#202020 !important; border:0; border-radius:9px; font-size:1.4rem; cursor:pointer; }
+.storefront-dialog-body { display:grid; gap:12px; padding:18px 20px 20px; color:#f5f5f5 !important; background:#080808 !important; }
+.storefront-dialog-body p { margin:0; color:#f5f5f5 !important; }
+.storefront-dialog-body .storefront-muted { color:#aaa !important; }
+.storefront-history-list { display:grid; gap:8px; }
+.storefront-history-list a,.storefront-order { display:block; padding:11px 12px; color:#f5f5f5 !important; background:#171717 !important; border:1px solid #292929; border-radius:9px; text-decoration:none; }
+.storefront-history-list a:hover { background:#242424 !important; }
+.storefront-account-form { display:grid; gap:10px; background:#080808 !important; }
+.storefront-account-form label { color:#ddd !important; }
+.storefront-account-form input { width:100%; min-height:42px; padding:10px 12px; color:#fff !important; background:#111 !important; border:1px solid #3c3c3c; border-radius:9px; }
+.storefront-dialog-action { width:fit-content; padding:10px 14px; color:#fff !important; background:#252525 !important; border:1px solid #494949; border-radius:9px; font-weight:700; cursor:pointer; }
+.profile { position:relative; }
+#profileMenu.profile-menu { position:absolute !important; top:calc(100% + 8px) !important; right:0 !important; left:auto !important; z-index:10001 !important; display:none !important; min-width:225px; padding:7px; color:#fff !important; background:#090909 !important; border:1px solid #393939; border-radius:12px; box-shadow:0 14px 40px #000c; }
+#profileMenu.profile-menu.open { display:grid !important; gap:3px; }
+#profileMenu [data-store-account] { display:block; width:100%; padding:11px 12px; color:#fff !important; background:transparent !important; border:0; border-radius:8px; text-align:left; font:inherit; cursor:pointer; }
+#profileMenu [data-store-account]:hover { background:#252525 !important; }
+#profileButton .profile-name { color:#fff !important; white-space:nowrap; }
+#aiDrawer.ai-drawer { position:fixed !important; inset:auto 20px 20px auto !important; z-index:99980 !important; display:flex !important; flex-direction:column; width:min(390px,calc(100vw - 32px)) !important; height:min(560px,calc(100dvh - 40px)) !important; max-height:calc(100dvh - 40px) !important; overflow:hidden !important; color:#fff !important; background:#090909 !important; border:1px solid #393939; border-radius:16px; box-shadow:0 18px 60px #000c; }
+#aiDrawer .ai-head,#aiDrawer .ai-messages,#aiDrawer .ai-form { background:#090909 !important; color:#fff !important; }
+#aiDrawer .ai-head { flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; padding:14px; border-bottom:1px solid #292929; }
+#aiDrawer .ai-head .close { color:#fff !important; background:#222 !important; border:1px solid #444; border-radius:8px; }
+#aiDrawer .ai-messages { display:flex; flex:1 1 auto; flex-direction:column; gap:9px; min-height:0; overflow:auto; padding:13px; }
+#aiDrawer .ai-messages .bubble { max-width:90%; padding:10px 12px; color:#fff !important; background:#202020 !important; border-radius:12px; overflow-wrap:anywhere; }
+#aiDrawer .ai-messages .bubble.user { align-self:flex-end; background:#4a1118 !important; }
+#aiDrawer .ai-messages .bubble a { color:#fff !important; background:#171717 !important; }
+#aiDrawer .ai-form { display:flex; flex:0 0 auto; gap:8px; padding:10px; border-top:1px solid #292929; }
+#aiDrawer .ai-form input { flex:1; min-width:0; padding:10px; color:#fff !important; background:#151515 !important; border:1px solid #444; border-radius:8px; }
+#aiDrawer .ai-form .button { color:#fff !important; background:#b51223 !important; }
+@media(max-width:480px) { #aiDrawer.ai-drawer { inset:auto 10px 10px 10px !important; width:auto !important; height:min(70dvh,560px) !important; max-height:calc(100dvh - 20px) !important; } }
